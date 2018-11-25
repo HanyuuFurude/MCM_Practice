@@ -13,9 +13,13 @@ class Reader:
         for i in range(self.table.nrows):
             print(self.table.row_values(i))
 
+    def debug(self):
+        print(self.table.ncols, self.table.nrows)
+
 
 if __name__ == '__main__':
     import os
     print('[path] '+os.path.dirname(os.path.abspath(__file__)))
     reader = Reader()
-    reader.print()
+    reader.debug()
+    # reader.print()
