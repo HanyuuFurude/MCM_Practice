@@ -22,6 +22,16 @@ class Reader:
             matrix.append(self.table.row_values(i))
         return matrix
 
+    def getSubMatrix(self,*field):
+        matrix = []
+        for i in range(self.table.nrows):
+            subMat = [] 
+            for x in range(len(field)):
+               subMat.append(self.table.cell(i,field[x]).value)
+            matrix.append(subMat)
+            del(subMat)
+        return matrix
+
 
 if __name__ == '__main__':
     import os
@@ -29,6 +39,7 @@ if __name__ == '__main__':
     reader = Reader()
     reader.debug()
     # reader.print()
-    a = reader.getMatrix()
+    a = reader.getSubMatrix(5,6,7,8)
     print(type(a))
-    print(a[2][2])
+    print(a)
+
