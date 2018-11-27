@@ -17,7 +17,7 @@ class Reader:
         for i in range(self.table.nrows):
             self.matrix.append(self.table.row_values(i))
 
-    def print(self):
+    def print(self):\
         for i in range(self.table.nrows):
             print(self.table.row_values(i))
 
