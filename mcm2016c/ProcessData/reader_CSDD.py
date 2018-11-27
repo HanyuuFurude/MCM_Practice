@@ -27,14 +27,13 @@ class Reader:
         print(type(self.table))
         print(type(self.table.cell(0, 0)))
         print(type(self.dataMartix))
-        print(self.table.nrows, self.table.ncols)
+        print(self.table.nrows, self.ctable.ncols)
         f = open(self.filePath+'\\Hanyuu.log', 'w')
         for x in range(self.table.nrows):
             if(self.table.cell(x, 0).value != ''):
                 print(self.table.cell(x, 0).value)
                 f.write(self.table.cell(x, 0).value+'\n')
-        f.close()
-        print(len(self.matrix))
+        f.close(c
         print(type(self.matrix))
         print(self.matrix[2][3])
 
