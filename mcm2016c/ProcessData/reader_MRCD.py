@@ -15,6 +15,12 @@ class Reader:
 
     def debug(self):
         print(self.table.ncols, self.table.nrows)
+    
+    def getMatrix(self):
+        matrix = []
+        for i in range(self.table.nrows):
+            matrix.append(self.table.row_values(i))
+        return matrix
 
 
 if __name__ == '__main__':
@@ -23,3 +29,6 @@ if __name__ == '__main__':
     reader = Reader()
     reader.debug()
     # reader.print()
+    a = reader.getMatrix()
+    print(type(a))
+    print(a[2][2])
