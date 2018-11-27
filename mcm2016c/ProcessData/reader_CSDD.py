@@ -1,6 +1,6 @@
 import xlrd
 import numpy as np
-
+import dataDictionaryIndexer
 
 class Reader:
 
@@ -12,10 +12,10 @@ class Reader:
         self.data = xlrd.open_workbook(self.filePath+'\\'+self.fileName)
         self.table = self.data.sheets()[0]
         self.dataMartix = np.zeros((self.table.nrows, self.table.ncols))
-        # for x in range(self.table.ncols):
-        #     col = self.table.col_values(x)
-        #     col = np.matrix(col)
-        #     self.dataMartix[:, x] = col
+        # 主数据区
+        self.matrix=[]
+        for i in range(self.table.nrows):
+            self.matrix.append(self.table.row_values(i))
 
     def print(self):\
         for i in range(self.table.nrows):
@@ -34,6 +34,10 @@ class Reader:
                 print(self.table.cell(x, 0).value)
                 f.write(self.table.cell(x, 0).value+'\n')
         f.close()
+        print(len(self.matrix))
+        print(type(self.matrix))
+        print(self.matrix[2][3])
+
 
 
 if __name__ == '__main__':
