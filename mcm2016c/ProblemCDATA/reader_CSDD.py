@@ -17,7 +17,7 @@ class Reader:
         #     col = np.matrix(col)
         #     self.dataMartix[:, x] = col
 
-    def print(self):
+    def print(self):\
         for i in range(self.table.nrows):
             print(self.table.row_values(i))
 
