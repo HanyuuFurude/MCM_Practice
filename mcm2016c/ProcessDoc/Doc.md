@@ -6,7 +6,7 @@
 为了确定最佳捐赠策略，本文提出了一个基于适用于慈善组织的投资回报率（ROI）原始定义的数据动机模型。
 
 In order to evaluate the value of a school, we describe metrics in given data files. We selected two main species vector.First, 
-我们使用了插补法对数据进行了补全和清洗，通过先断知识，我们为其赋予了初始分值并通过后期处理给出了相应的权重。
+我们使用了插补法对数据进行了补全和清洗，通过先断知识，我们为其赋予了初始分值并通过后期处理给出了相应的权重。通过numpy给出了初步的y hat然后将结果均化最后用Sigmoid方法输出得到合理分布并在高分段发现其差分作用相对显著。
 
 其次，为了解决由高维数据引起的问题，我们采用主成分分析法（PCA）将数据降维，得到新的特征向量，即新的绩效指标。 
 
