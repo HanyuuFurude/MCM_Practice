@@ -67,67 +67,59 @@ However, those methods also arise with widely acknowledged concerns (Burke,1998)
 
 In accordance with Goodgrant Foundation’s request, this paper provides a prudent definition of return on investment (ROI) for charitable organizations, and develops an original data-motivated model, which is feasible even faced with tangled cross-section data and absent time-series data, to determine the optimal strategy for funding. The strategy contains selection of institutions and distribution of investment across institutions, time and regions.
 
-## 1.2 Detailed Definitions & Assumptions
+# 2. Symbols,Definitions and assumptions 
+## 2.1 Detailed Definitions
 
-### 1.2.1 Detailed Definitions
+|       name        |                          definition                          |      denotation       |
+| :---------------: | :----------------------------------------------------------: | :-------------------: |
+|       index       |     The data value of a school, a total of p data values     |  $x_1,x_2,x_3...x_p$  |
+|    school_num     |                 number of candidate schools                  |           n           |
+| performance index |               performance index of i th school               |         $Z_i$         |
+|  simplify index   | The main data of a school obtained after principal component analysis, a total of j data values | $y_1，y_2，y_3...y_j$ |
+|    donatation     |              Amount of donation to i th school               |         $F_i$         |
 
-|     name     |                        definition                         |      denotation       |
-| :----------: | :-------------------------------------------------------: | :-------------------: |
-|   学校属性   |         评价一所学校的回报的数据值，共有p个数据值         |  $x_1,x_2,x_3...x_p$  |
-|  school_num  |                number of candidate schools                |           n           |
-|   绩效指数   |                    对一所学校的总评价                     |           Y           |
-| 简化后的指标 | 经过主成分分析后得到的一所学校的主要数据，共共有j个数据值 | $Z_1，Z_2，Z_3...Z_j$ |
-|   捐赠金额   |          对一所学校的捐赠金额，在一个假设集合中           |         $Z_i$         |
-|              |                                                           |                       |
-
-### 1.2.2 Assumption
+## 2.2 Assumption
 
 1. Stability. We assume data of any institution should be stable without the impact from outside. To be specific, the key factors like the donation amount and the performance index should remain unchanged if the college does not receive new donations. 
-2. Goodgrant Foundation’s donation (Increase in donation amount) is discrete rather than continuous. This is reasonable because each donation is usually an integer multiple of a minimum amount, like $1m. After referring to the data of other foundations like Lumina Foundation, we recommend donation amount should be one value in the set below:
-{500000, 1000000, 1500000, ..., 10000000}
-3. The performance index is a linear composition of all given performance indicators.
-4. Performance contributing variables linearly affect the performance index. 
-5. Increase in donation amount affects the performance index through performance contributing
-variables. 
-6. The impact of increase in donation amount on performance contributing variables contains 2 parts: homogenous one and heterogenous one. The homogenous influence is repre- sented by a smooth function from donation amount to performance contributing variables. And the heterogenous one is represented by deviation from the function.
+2. The performance index is a linear composition of all given performance indicators.
+3. Performance contributing variables linearly affect the performance index. 
+4. Increase in donation amount affects the performance index through performance contributing
+   variables. 
+5. The impact of increase in donation amount on performance contributing variables contains 2 parts: homogenous one and heterogenous one. The homogenous influence is repre- sented by a smooth function from donation amount to performance contributing variables. And the heterogenous one is represented by deviation from the function.
 
 ## 1.3 The Advantages of Our Model
 
 Our model has many advantages in the application:
-* The evaluation model is based entirely on data and there are few subjective or arbitrary decision rules.
-* Our model successfully identifies potential mechanisms, not just indicators such as graduation rates.
-* Our model makes full use of cross-section data and does not require time series data to produce reasonable results
-A
-# 2. Symbols,Definitions and assumptions 
-* all of the data given in data file.(expect some string fields)
-* We found some most important tags.Such as //TODO...
-## 2.1 Symbols and Definitions
+• The evaluation model is based entirely on data and there are few subjective or arbitrary decision rules.
+• Our model successfully identifies potential mechanisms, not just indicators such as graduation rates.
+• Our model makes full use of cross-section data and does not require time series data to produce reasonable results
 
-## 2.2 General Assumptions
+
+
 #  3. Articture our metrics
-## 3.1 数据维度过高的问题
+## 3.1 Problem with too high data dimension
 
-因为考虑的相关因素太多，导致结果过多，变量间的相关度高，为建模带来不便。因此希望能够用较少的变量来解释资料中大部分变异，将相关性高的变量转化成彼此相互独立或不相关的变量。所以，我们最终选择主成分分析法。
+Because there are too many related factors to consider, the results are too much, and the correlation between variables is high, which brings inconvenience to modeling. It is therefore desirable to be able to interpret most of the variation in the data with fewer variables and to convert highly relevant variables into variables that are independent or unrelated to each other. Therefore, we finally choose Principal Component Analysis.
 
-## 3.2 利用主成分分析法（PCA）降低数据维度
+## 3.2 principal component analysis (PCA)
 
-$x_1,x_2,...,x_p$为p个描述学校的原始特征，$c_1,c_2,...,c_p$表示各个变量的权重。为每个特征值加一个权重并求和得到s：
+$x_1,x_2,...,x_p$ is the original feature describing the school, and $c_1,c_2,...,c_p$ represents the weight of each variable. Add a weight to each eigenvalue and sum it to get s:
 $$
 s=c_1x_1+c_2x_2+...+c_px_p
 $$
-我们希望选择适当的权重能够更好地表现学校的效益，每个学校对应一个综合成绩，记为$s_1,s_2,...,s_n$,n为学校数量。如果这些数值很分散，就表明它区分的很好，即寻找这样一系列参数c，使得$s_1,s_2,s_3,...,s_n$尽可能的分散。它的统计学定义描述如下：
+We hope that choosing the right weights can better reflect the school's effectiveness. Each school corresponds to a comprehensive score, which is recorded as $s_1, s_2,..., s_n$, where n is the number of schools. If these values are very scattered, it means that it is well distinguished, that is, looking for such a series of parameters c, so that $s_1, s_2, s_3, ..., s_n$ are scattered as much as possible. Its statistical definition is described as follows:
 
-设$X_1,X_2,...,X_p$表示以$x_1,x_2,...,x_p$为样本观测值的随机变量，如果能找到$c_1,c_2,...,c_p$使得
+Let $X_1, X_2,...,X_p$ denote a random variable with $x_1,x_2,...,x_p$ as the sample observation, if you can find $c_1,c_2,...,c_p$
 $$
 Var(c_1X_1+c_2X_2+...+c_pX_p)\tag{3.1}
 $$
-的值达到最大，由于方差反映了数据差异的程度，也就表明我们抓住了这p个变量的最大变异。同该表达式必须加上一个限制，否则权值可能选择无穷大而没有意义，这里我们规定
+The value of equation (3.1) is maximized. Since the variance reflects the degree of data difference, it shows that we have captured the maximum variation of the p variables. The same expression must be added with a limit, otherwise the weight may choose infinity and no meaning, here we specify
 $$
 c_1^2+c_2^2+...+c_p^2=1             \tag{3.2}
 $$
-至此我们得到一个主成分方向$\vec{a}=[c_1,c_2,...,c_p]$,它是一个p-维空间的单位向量。但是一个主成分不足以代表原来的p个变量，因此需要寻找多个主成分，且第二个主成分不应该再包含第一个主成分的信息，即让这两个主成分的协方差为0，方向正交。
+So far we get a principal component direction $\vec{a}=[c_1,c_2,...,c_p]$, which is a unit vector of a p-dimensional space. But a principal component is not enough to represent the original p variables, so it is necessary to find multiple principal components, and the second principal component should not contain the information of the first principal component, that is, the covariance of the two principal components is 0, the direction is orthogonal.
 
-设$Z_i$表示第i个主成分，$i=1,2,...,p,可设
+Let $Z_i$ denote the i-th principal component, $i=1,2,...,p, we can assume
 $$
 \begin{equation} 
 \left\{ 
@@ -138,48 +130,65 @@ Z_2=c_{21}X_1+c_{22}X_2+...+c_{2p}X_p, \\
 Z_{p}=c_{p1}X_1+c_{p2}X_2+...+c_{pp}X_p, 
 \end{array} \right. \end{equation}\tag{3.3}
 $$
-对于每个i，均满足等式（3.2）。接着需要确定$j(j<p)$的数值，即降低维度后的指标个数。
+For each i, the equation (3.2) is satisfied. Then you need to determine the value of $j(j<p)$, which is the number of indicators after the dimension is lowered.
 
-计算每一个主成分方向对应的的特征值$\lambda_j(j=1,2,...,p)$的信息贡献率和累积贡献率。称
+The information contribution rate and the cumulative contribution rate of the feature value $\lambda_j(j=1, 2, . . . , p)$ corresponding to each principal component direction are calculated.
 $$
 b_j=\frac{\lambda_j}{\sum_{k=1}^{p}\lambda_k}\tag{3.4}
 $$
-为主成分$y_i$的信息贡献率。
+Equation (3.4) is the information contribution rate of the main component $y_i$.
 $$
 \alpha_j=\frac{\sum_{k=1}^{j}{\lambda_k}}{\sum_{k=1}^{p}{\lambda_k}}\tag{3.5}
 $$
-为主成分$y_1,y_2,...,y_j$的累积贡献率。当$\alpha_j$接近于1时，选择前j个指标变量，代替原来的p个指标。
+Equation (3.4) is the cumulative contribution rate of the main components $y_1, y_2, ..., y_j$. When $\alpha_j$ is close to 1, the first j indicator variables are selected instead of the original p indicators.
 
 
 # 4. Determining the Performance Index
 
-由上面的主成分分析法可以得到j个主要的变量，但是他们都是标准化之后的值，并不具备原来的精确意义。至此，构件评价指数的准备工作就已完成，计算综合得分
+From the above principal component analysis method, j main variables can be obtained, but they are all standardized values and do not have the original precise meaning. At this point, the preparation of the component evaluation index has been completed, and the comprehensive score is calculated.
 $$
-Z=\sum_{j=1}^{p}{b_jy_j}
+Z=\sum_{j=1}^{p}{b_jy_j}\tag{4.1}
 $$
+
+$$
+Z=0.566426x_1+0.433574x_2\tag{4.2}
+$$
+
+Equation (4.2) is a linear calculation formula of the evaluation index obtained after the above processing.
+
+The final calculated evaluation index is the ordinate, the school is the abscissa, and the distribution shown in the following figure is obtained by sorting the evaluation indicators from high to low.
+
+![1543416019431](C:\Users\zmj\AppData\Roaming\Typora\typora-user-images\1543416019431.png)
+
+It can be seen that the evaluation indicators can distinguish the performance of each school very well. The index of the top schools is very high, and the subsequent data gradients are gradually flattened.
 
 # 5. Determining Investment Strategy based on ROI
 
-Since we have already approximated the linear relation between the performance index with the 3 performance contributing variables, we want to know how increase in donation changes them. In this paper, we use Generalized Adaptive Model (GAM) to smoothly fit the relations. Generalized Adaptive Model is a generalized linear model in which the dependent variable depends linearly on unknown smooth functions of independent variables. The fitted curve of percentage of students who receive a Pell Grant is depicted below in Fig 4 (see the other two fitted curves in Appendix):
 
-![1543398609995](C:\Users\zmj\AppData\Roaming\Typora\typora-user-images\1543398609995.png)
-
-A Pell Grant is money the U.S. federal government provides directly for students who need it to pay for college. Intuitively, if the amount of donation an institution receives from other sources such as private donation increases, the institution is likely to use these donations to alleviate students’ financial stress, resulting in percentage of students who receive a Pell Grant. Thus it is reasonable to see a fitted curve downward sloping at most part. Also, in common sense, an increase in donation amount would lead to increase in the performance index. 
-
-![1543398671892](C:\Users\zmj\AppData\Roaming\Typora\typora-user-images\1543398671892.png)
-
-Again, we use fitted curve of percentage of students who receive a Pell Grant as an example. We modeled the blue fitted curve to represent the homogeneous relation between percentage of students who receive a Pell Grant and donation amount. Recall fitted ROI of percentage of students who receive a Pell Grant (f ROI1) is change in fitted values (∆f) over increase in donation amount (∆X). So fROI1 = ∆f/∆X According to assumption A2, the amount of each Goodgrant Foundation’s donation falls into apre-specifiedset,namely {500000,1000000,1500000,...,10000000}.
-
-Sowegetasetofpossible fitted ROI of percentage of students who receive a Pell Grant (fROI1). Clearly, fROI1 is de- pendent on both donation amount (X) and increase in donation amount (∆X). Calculation of fitted ROIs of other performance contributing variables is similar.
 $$
 ROI=\frac{Z}{F}
 $$
-The next step is to develop an optimal strategy including a list of institutions to be sponsored and the appropriate amount of money given to each institution. We adopt a two-step selection algorithm to find the global optimal allocation strategy. Since we have a finite set of possible ROI for every institution. The first step is to compare ROI among each institution’s set. By maximizing ROI for each institution, we determine the optimal amount of investment on each institution if we invest. Then, the next step is to rank all institutions with their respective maximal ROI. Given the budget constraint of money available ($100m), we pick up the institutions with the largest potential to improve on the performance indicator, namely the largest maximal ROI, until we exhaust the budget.
+Z represents the evaluation criteria obtained above. In order to maximize the ROI, the most intuitive idea is to put all the money to the school with the highest rate of return. However, it is obvious that this is not advisable. The significance of investing is to sponsor more students and help more people in need. Considering the meaning of rewards, no matter what kind of investment has its risks, you should not put your eggs in the same basket. Therefore, it is obviously unreasonable to simply take the most worthwhile investment method through ROI.
+
+Then, it is necessary to ensure the number of schools invested, but also to ensure a relatively high rate of return. We need to calculate based on the number of schools invested and the rate of return, and meet the following conditions
+
+1. There are two parameters, one is the number of schools invested, and the other is the amount of investment for each school. At the same time, the above evaluation indicators are utilized.
+2. The increase in the rate of return decreases as the number of schools decreases, or decreases
+3. There is a maximum value that makes the point satisfy the optimal investment situation
+
+Get the following formula
+$$
+ROI_1=\frac{n}{N}\sum_{i=1}^{n}{\frac{Z_i}{F_i}}
+$$
+n indicates the number of schools invested, N indicates the total number of schools, $Z_i$ indicates the performance indicators of the i-th school, and $F_i$ indicates the investment amount of the i-th school.
+
+# 投资结果再写一遍！！！！！！
 
 # 6. 计算流程
 ## 6.1 数据清洗与处理
 >  因为慈善机构给出的学校比数据集中统计的学校数量要少很多，因此首要步骤是将这些备选学校的数据筛选出来，并且将学校官网、研究生数量等无关因素排除，最终筛选出毕业率、毕业后还款率、得奖的学生人数等p个与回报指数相关的指标。
- *  问题：我们发现数据文件中存在大量缺失值，数据集中含有缺失项的变量成为不完全变量，从缺失的分布我们认为属于随机缺失(missing random,MAR)。对于随机缺失，删除是、记录时不合适的，随机缺失可以通过已知变量对缺失值进行估计。如果单纯舍去缺失项会导致模型失准和信息丢失。
+>
+>  *  问题：我们发现数据文件中存在大量缺失值，数据集中含有缺失项的变量成为不完全变量，从缺失的分布我们认为属于随机缺失(missing random,MAR)。对于随机缺失，删除是、记录时不合适的，随机缺失可以通过已知变量对缺失值进行估计。如果单纯舍去缺失项会导致模型失准和信息丢失。
 * 必要性:数据缺失在许多研究领域都是一个复杂的问题。对数据挖掘来说，缺省值的存在，造成了以下影响： 
 	* 系统丢失了大量的有用信息；
 	* 系统中所表现出的不确定性更加显著，系统中蕴涵的确定性成分更难把握；
@@ -190,28 +199,28 @@ The next step is to develop an optimal strategy including a list of institutions
 然而，这种方法却有很大的局限性。它以减少历史数据来换取信息的完备，会丢弃大量隐藏在这些对象中的信息。在初始数据集包含的对象很少的情况下，删除少量对象足以严重影响信息的客观性和结果的正确性；因此，当缺失数据所占比例较大，特别当遗漏数据非随机分布时，这种方法可能导致数据发生偏离，从而引出错误的结论。
 说明:删除元组，或者直接删除该列特征，有时候会导致性能下降。
 	* 数据补齐：这类方法是用一定的值去填充空值，从而使信息表完备化。通常基于统计学原理，根据初始数据集中其余对象取值的分布情况来对一个缺失值进行填充。数据挖掘中常用的有以下几种补齐方法：
-        * filling manually
-        由于最了解数据的还是用户自己，因此这个方法产生数据偏离最小，可能是填充效果最好的一种。然而一般来说，该方法很费时，当数据规模很大、空值很多的时候，该方法是不可行的。
-        * Treating Missing Attribute values as Special values
-        将空值作为一种特殊的属性值来处理，它不同于其他的任何属性值。如所有的空值都用unknown填充。这样将形成另一个有趣的概念，可能导致严重的数据偏离，一般不推荐使用。
-        * Mean/Mode Completer
-        将初始数据集中的属性分为数值属性和非数值属性来分别进行处理。 如果空值是数值型的，就根据该属性在其他所有对象的取值的平均值来填充该缺失的属性值； 如果空值是非数值型的，就根据统计学中的众数原理，用该属性在其他所有对象的取值次数最多的值(即出现频率最高的值)来补齐该缺失的属性值。与其相似的另一种方法叫条件平均值填充法（Conditional Mean Completer）。在该方法中，用于求平均的值并不是从数据集的所有对象中取，而是从与该对象具有相同决策属性值的对象中取得。 这两种数据的补齐方法，其基本的出发点都是一样的，以最大概率可能的取值来补充缺失的属性值，只是在具体方法上有一点不同。与其他方法相比，它是用现存数据的多数信息来推测缺失值。
-        * Hot deck imputation
-        对于一个包含空值的对象，热卡填充法在完整数据中找到一个与它最相似的对象，然后用这个相似对象的值来进行填充。不同的问题可能会选用不同的标准来对相似进行判定。该方法概念上很简单，且利用了数据间的关系来进行空值估计。这个方法的缺点在于难以定义相似标准，主观因素较多。
-        * K-means clustering
-        先根据欧式距离或相关分析来确定距离具有缺失数据样本最近的K个样本，将这K个值加权平均来估计该样本的缺失数据。
-        * 使用所有可能的值填充（Assigning All Possible values of the Attribute）
-        用空缺属性值的所有可能的属性取值来填充，能够得到较好的补齐效果。但是，当数据量很大或者遗漏的属性值较多时，其计算的代价很大，可能的测试方案很多。
-        * Combinatorial Completer
-        用空缺属性值的所有可能的属性取值来试，并从最终属性的约简结果中选择最好的一个作为填补的属性值。这是以约简为目的的数据补齐方法，能够得到好的约简结果；但是，当数据量很大或者遗漏的属性值较多时，其计算的代价很大。
-        * Regression
-        基于完整的数据集，建立回归方程。对于包含空值的对象，将已知属性值代入方程来估计未知属性值，以此估计值来进行填充。当变量不是线性相关时会导致有偏差的估计。
-        * 期望值最大化方法（Expectation maximization，EM）
-        EM算法是一种在不完全数据情况下计算极大似然估计或者后验分布的迭代算法。在每一迭代循环过程中交替执行两个步骤：E步（Excepctaion step,期望步），在给定完全数据和前一次迭代所得到的参数估计的情况下计算完全数据对应的对数似然函数的条件期望；M步（Maximzation step，极大化步），用极大化对数似然函数以确定参数的值，并用于下步的迭代。算法在E步和M步之间不断迭代直至收敛，即两次迭代之间的参数变化小于一个预先给定的阈值时结束。该方法可能会陷入局部极值，收敛速度也不是很快，并且计算很复杂。
-        * Multiple Imputation，MI
-        多重填补方法分为三个步骤： 为每个空值产生一套可能的填补值，这些值反映了无响应模型的不确定性；每个值都被用来填补数据集中的缺失值，产生若干个完整数据集合。每个填补数据集合都用针对完整数据集的统计方法进行统计分析。对来自各个填补数据集的结果进行综合，产生最终的统计推断，这一推断考虑到了由于数据填补而产生的不确定性。该方法将空缺值视为随机样本，这样计算出来的统计推断可能受到空缺值的不确定性的影响。该方法的计算也很复杂。
-        * C4.5
-        通过寻找属性间的关系来对遗失值填充。它寻找之间具有最大相关性的两个属性，其中没有遗失值的一个称为代理属性，另一个称为原始属性，用代理属性决定原始属性中的遗失值。这种基于规则归纳的方法只能处理基数较小的名词型属性。
+    ​    * filling manually
+    ​    由于最了解数据的还是用户自己，因此这个方法产生数据偏离最小，可能是填充效果最好的一种。然而一般来说，该方法很费时，当数据规模很大、空值很多的时候，该方法是不可行的。
+    ​    * Treating Missing Attribute values as Special values
+    ​    将空值作为一种特殊的属性值来处理，它不同于其他的任何属性值。如所有的空值都用unknown填充。这样将形成另一个有趣的概念，可能导致严重的数据偏离，一般不推荐使用。
+    ​    * Mean/Mode Completer
+    ​    将初始数据集中的属性分为数值属性和非数值属性来分别进行处理。 如果空值是数值型的，就根据该属性在其他所有对象的取值的平均值来填充该缺失的属性值； 如果空值是非数值型的，就根据统计学中的众数原理，用该属性在其他所有对象的取值次数最多的值(即出现频率最高的值)来补齐该缺失的属性值。与其相似的另一种方法叫条件平均值填充法（Conditional Mean Completer）。在该方法中，用于求平均的值并不是从数据集的所有对象中取，而是从与该对象具有相同决策属性值的对象中取得。 这两种数据的补齐方法，其基本的出发点都是一样的，以最大概率可能的取值来补充缺失的属性值，只是在具体方法上有一点不同。与其他方法相比，它是用现存数据的多数信息来推测缺失值。
+    ​    * Hot deck imputation
+    ​    对于一个包含空值的对象，热卡填充法在完整数据中找到一个与它最相似的对象，然后用这个相似对象的值来进行填充。不同的问题可能会选用不同的标准来对相似进行判定。该方法概念上很简单，且利用了数据间的关系来进行空值估计。这个方法的缺点在于难以定义相似标准，主观因素较多。
+    ​    * K-means clustering
+    ​    先根据欧式距离或相关分析来确定距离具有缺失数据样本最近的K个样本，将这K个值加权平均来估计该样本的缺失数据。
+    ​    * 使用所有可能的值填充（Assigning All Possible values of the Attribute）
+    ​    用空缺属性值的所有可能的属性取值来填充，能够得到较好的补齐效果。但是，当数据量很大或者遗漏的属性值较多时，其计算的代价很大，可能的测试方案很多。
+    ​    * Combinatorial Completer
+    ​    用空缺属性值的所有可能的属性取值来试，并从最终属性的约简结果中选择最好的一个作为填补的属性值。这是以约简为目的的数据补齐方法，能够得到好的约简结果；但是，当数据量很大或者遗漏的属性值较多时，其计算的代价很大。
+    ​    * Regression
+    ​    基于完整的数据集，建立回归方程。对于包含空值的对象，将已知属性值代入方程来估计未知属性值，以此估计值来进行填充。当变量不是线性相关时会导致有偏差的估计。
+    ​    * 期望值最大化方法（Expectation maximization，EM）
+    ​    EM算法是一种在不完全数据情况下计算极大似然估计或者后验分布的迭代算法。在每一迭代循环过程中交替执行两个步骤：E步（Excepctaion step,期望步），在给定完全数据和前一次迭代所得到的参数估计的情况下计算完全数据对应的对数似然函数的条件期望；M步（Maximzation step，极大化步），用极大化对数似然函数以确定参数的值，并用于下步的迭代。算法在E步和M步之间不断迭代直至收敛，即两次迭代之间的参数变化小于一个预先给定的阈值时结束。该方法可能会陷入局部极值，收敛速度也不是很快，并且计算很复杂。
+    ​    * Multiple Imputation，MI
+    ​    多重填补方法分为三个步骤： 为每个空值产生一套可能的填补值，这些值反映了无响应模型的不确定性；每个值都被用来填补数据集中的缺失值，产生若干个完整数据集合。每个填补数据集合都用针对完整数据集的统计方法进行统计分析。对来自各个填补数据集的结果进行综合，产生最终的统计推断，这一推断考虑到了由于数据填补而产生的不确定性。该方法将空缺值视为随机样本，这样计算出来的统计推断可能受到空缺值的不确定性的影响。该方法的计算也很复杂。
+    ​    * C4.5
+    ​    通过寻找属性间的关系来对遗失值填充。它寻找之间具有最大相关性的两个属性，其中没有遗失值的一个称为代理属性，另一个称为原始属性，用代理属性决定原始属性中的遗失值。这种基于规则归纳的方法只能处理基数较小的名词型属性。
     * 就几种基于统计的方法而言，删除元组法和平均值法差于热卡填充法、期望值最大化方法和多重填充法；回归是比较好的一种方法，但仍比不上hot deck和EM；EM缺少MI包含的不确定成分。值得注意的是，这些方法直接处理的是模型参数的估计而不是空缺值预测本身。它们合适于处理无监督学习的问题，而对有监督学习来说，情况就不尽相同了。譬如，你可以删除包含空值的对象用完整的数据集来进行训练，但预测时你却不能忽略包含空值的对象。另外，C4.5和使用所有可能的值填充方法也有较好的补齐效果，人工填写和特殊值填充则是一般不推荐使用的。
     * 选取：
         * 由于数据缺失项较多，删除元组会造成大量有效数据失效，不处理会导致计算效果可信度低下，我们选择了补齐元素；
