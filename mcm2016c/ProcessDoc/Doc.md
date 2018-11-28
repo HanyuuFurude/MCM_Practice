@@ -13,15 +13,18 @@
 
 最后，我们计算ROI，定义为性能指数的增加而不是捐赠量的增加。 此投资回报率是机构特定的，取决于捐赠金额的增加。 通过采用两步ROI最大化算法，我们确定最优投资策略。
 
-In order to evaluate the value of a school, we describe metrics in given data files. 我们主要从以下几个范围进行综合评估（1.2.3.）
-====以下内容未修改……===
- Moreover, each aspect is subdivided into several secondary metrics. Take playoff performance as example, we collect postseason result (Sweet Sixteen, Final Four, etc.) per year from NCAA official website, Wikimedia and so on.    First, Analytic Hierarchy Process (AHP) Model is established to determine the weight of each metric to coaches’ evaluation grade. All metrics are adequately filled into the three-hierarchy structure, and then we obtain the metric weight based on which evaluation grade is calculated. Second, Fuzzy Synthetic Evaluation (FSE) is built to overcome weakness of excess subjective factors in AHP. This model takes data processing by membership function to generate fuzzy matrix. After that, entropy method and linear weighted method are applied to obtain evaluation grade.       To evaluate the accuracy of the two models, hit score is defined. It is supposed to reflect the difference between our results and standard rankings from several authorities such as ESPN and Sporting News. Take NCAA basketball as a case study, AHP receives 78.77 hit score while FSE gets 81.81, which indicates that FSE performs better than AHP. Afterwards, Aggregation Model (AM) can be developed by combining the two models based on hit score. The top 5 college basketball coaches, in turn, are John Wooden, Mike Krzyzewski, Adolph Rupp, Dean Smith and Bob Knight. Time line horizon does make a difference. According to turning points in NCAA history, we divide the previous century into six periods with different time weights which lead to the change of ranking. We apply our model into college women’s basketball only to find that genders do not matter. Model proves to be efficient in other sports. The ranking of college football is: Bear Bryant, Knute Rockne, Tom Osborne, Joe Paterno , Bobby Bowden, and the top 5 coaches in college hockey are Bob Johnson, Red Berenson, Jack Parker, Jerry York, Ron Mason.   We conduct sensitivity analysis on FSE to find best membership function and calculation rule. Sensitivity analysis on aggregation weight is also performed. It proves AM performs better than single model. As a creative use, top 3 presidents (U.S.) are picked out: Abraham Lincoln, George Washington, Franklin D. Roosevelt.      At last, the strength and weakness of our mode are discussed, non-technical explanation is presented and the future work is pointed as well.
+In order to evaluate the value of a school, we describe metrics in given data files. We selected two main species vector.First, 
+
+
+
+
+Analytic Hierarchy Process (AHP) Model is established to determine the weight of each metric to coaches’ evaluation grade. All metrics are adequately filled into the three-hierarchy structure, and then we obtain the metric weight based on which evaluation grade is calculated. Second, Fuzzy Synthetic Evaluation (FSE) is built to overcome weakness of excess subjective factors in AHP. This model takes data processing by membership function to generate fuzzy matrix. After that, entropy method and linear weighted method are applied to obtain evaluation grade.       To evaluate the accuracy of the two models, hit score is defined. It is supposed to reflect the difference between our results and standard rankings from several authorities such as ESPN and Sporting News. Take NCAA basketball as a case study, AHP receives 78.77 hit score while FSE gets 81.81, which indicates that FSE performs better than AHP. Afterwards, Aggregation Model (AM) can be developed by combining the two models based on hit score. The top 5 college basketball coaches, in turn, are John Wooden, Mike Krzyzewski, Adolph Rupp, Dean Smith and Bob Knight. Time line horizon does make a difference. According to turning points in NCAA history, we divide the previous century into six periods with different time weights which lead to the change of ranking. We apply our model into college women’s basketball only to find that genders do not matter. Model proves to be efficient in other sports. The ranking of college football is: Bear Bryant, Knute Rockne, Tom Osborne, Joe Paterno , Bobby Bowden, and the top 5 coaches in college hockey are Bob Johnson, Red Berenson, Jack Parker, Jerry York, Ron Mason.   We conduct sensitivity analysis on FSE to find best membership function and calculation rule. Sensitivity analysis on aggregation weight is also performed. It proves AM performs better than single model. As a creative use, top 3 presidents (U.S.) are picked out: Abraham Lincoln, George Washington, Franklin D. Roosevelt.      At last, the strength and weakness of our mode are discussed, non-technical explanation is presented and the future work is pointed as well.
 ***
 目录
 - [An Optimal Strategy of Donation for Educational Purpose](#an-optimal-strategy-of-donation-for-educational-purpose)
 - [Summary](#summary)
 - [给CEO的信](#%E7%BB%99ceo%E7%9A%84%E4%BF%A1)
-- [TODO.. 这里请补充最后的投资学校名单！！！！！！！！！！](#todo-%E8%BF%99%E9%87%8C%E8%AF%B7%E8%A1%A5%E5%85%85%E6%9C%80%E5%90%8E%E7%9A%84%E6%8A%95%E8%B5%84%E5%AD%A6%E6%A0%A1%E5%90%8D%E5%8D%95)
+- [下面是建议的投资策略](#%E4%B8%8B%E9%9D%A2%E6%98%AF%E5%BB%BA%E8%AE%AE%E7%9A%84%E6%8A%95%E8%B5%84%E7%AD%96%E7%95%A5)
 - [1. Introduction](#1-introduction)
     - [1.1 Statement of the Problem](#11-statement-of-the-problem)
     - [1.2 Detailed Definitions & Assumptions](#12-detailed-definitions--assumptions)
@@ -51,7 +54,30 @@ In order to evaluate the value of a school, we describe metrics in given data fi
 >最优投资策略是通过最大化估计的投资回报来确定的。更具体地说，综合绩效指数是在考虑了所有可能的绩效指标（如毕业率和毕业生收入）之后制定的。绩效指数的构建是为了代表学校的表现以及学院为学生和社区带来的积极影响。从这个角度来看，我们的定义设法捕捉捐赠的社会效益。然后我们采用主成分分析方法来找出性能贡献变量，这些变量强烈影响性能指标。我们拟合了这些变量和捐赠金额之间的关系，以预测每个绩效贡献变量的价值相对于捐赠金额的变化。我们通过将每个绩效贡献变量的值与捐赠金额和每个绩效贡献变量对绩效指数的影响相乘，然后将所有绩效的产品相加，计算ROI（定义为绩效指标相对于捐赠金额的增加）贡献变量。根据选择算法最大化投资回报后，决定最优投资策略。
 >
 >总之，我们的模型成功地制定了一项投资策略，包括目标机构清单和每个机构的投资金额。 （第1年的清单附在信件的末尾）。投资的持续时间也可以根据我们的模型确定。由于模型和评估方法完全是数据驱动的，没有包含任意标准，因此它适用于解决未来的慈善教育投资问题。我们坚信，我们的模式可以有效提高慈善教育投资的效率，并为最佳地提高学生的教育绩效提供一种适当和可行的方法。
-# TODO.. 这里请补充最后的投资学校名单！！！！！！！！！！
+# 下面是建议的投资策略
+| NO | INSTNM                                               | UNITID | SCORE       | INVESTMENT      |
+|----|------------------------------------------------------|:-------|------------:|----------------:|
+| 1  | Medical College of Wisconsin                         | 239169 | 0.999459574 | $5,086,407.39   |
+| 2  | Albany Medical College                               | 188580 | 0.997669333 | $5,077,296.57   |
+| 3  | A T Still University of Health Sciences              | 177834 | 0.997564058 | $5,076,760.81   |
+| 4  | West Virginia School of Osteopathic Medicine         | 237880 | 0.997476675 | $5,076,316.10   |
+| 5  | University of Massachusetts Medical School Worcester | 166708 | 0.996238404 | $5,070,014.35   |
+| 6  | New York Medical College                             | 193830 | 0.99406238  | $5,058,940.22   |
+| 7  | Rosalind Franklin University of Medicine and Science | 145558 | 0.993442022 | $5,055,783.12   |
+| 8  | Philadelphia College of Osteopathic Medicine         | 215123 | 0.988850119 | $5,032,414.20   |
+| 9  | University of North Texas Health Science Center      | 228909 | 0.982072607 | $4,997,922.37   |
+| 10 | Baylor College of Medicine                           | 223223 | 0.980199221 | $4,988,388.42   |
+| 11 | Meharry Medical College                              | 220792 | 0.978832453 | $4,981,432.71   |
+| 12 | Western University of Health Sciences                | 112525 | 0.976554211 | $4,969,838.38   |
+| 13 | SUNY Downstate Medical Center                        | 196255 | 0.975377605 | $4,963,850.45   |
+| 14 | University of California-San Francisco               | 110699 | 0.973446364 | $4,954,022.06   |
+| 15 | Midwestern University-Downers Grove                  | 143853 | 0.971981321 | $4,946,566.23   |
+| 16 | Midwestern University-Glendale                       | 423643 | 0.971949743 | $4,946,405.52   |
+| 17 | MCPHS University                                     | 166656 | 0.971513982 | $4,944,187.87   |
+| 18 | Upstate Medical University                           | 196307 | 0.968459056 | $4,928,640.87   |
+| 19 | St Louis College of Pharmacy                         | 179265 | 0.967265721 | $4,922,567.79   |
+| 20 | Samuel Merritt University                            | 122296 | 0.967202212 | $4,922,244.59   |
+|    |                                                      |        |             | $100,000,000.00 |
 
 ***
 # 1. Introduction
