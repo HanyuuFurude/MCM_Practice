@@ -32,12 +32,10 @@ In order to evaluate the value of a school, we describe metrics in given data fi
     - [2.1 Symbols and Definitions](#21-symbols-and-definitions)
     - [2.2 General Assumptions](#22-general-assumptions)
 - [3. Articture our metrics](#3-articture-our-metrics)
-    - [3.1 Specify evalution norms](#31-specify-evalution-norms)
-    - [3.2 Collect data](#32-collect-data)
-    - [3.3 Preprocess data](#33-preprocess-data)
-- [4. Models](#4-models)
-- [5. Target](#5-target)
-    - [5.1 define](#51-define)
+    - [3.1 数据维度过高的问题](#31-%E6%95%B0%E6%8D%AE%E7%BB%B4%E5%BA%A6%E8%BF%87%E9%AB%98%E7%9A%84%E9%97%AE%E9%A2%98)
+    - [3.2 利用主成分分析法（PCA）降低数据维度](#32-%E5%88%A9%E7%94%A8%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90%E6%B3%95pca%E9%99%8D%E4%BD%8E%E6%95%B0%E6%8D%AE%E7%BB%B4%E5%BA%A6)
+- [4. Determining the Performance Index](#4-determining-the-performance-index)
+- [5. Determining Investment Strategy based on ROI](#5-determining-investment-strategy-based-on-roi)
 - [6. 计算流程](#6-%E8%AE%A1%E7%AE%97%E6%B5%81%E7%A8%8B)
     - [6.1 数据清洗与处理](#61-%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97%E4%B8%8E%E5%A4%84%E7%90%86)
 - [7. Conclusions and Discussion](#7-conclusions-and-discussion)
@@ -73,11 +71,14 @@ In accordance with Goodgrant Foundation’s request, this paper provides a prude
 
 ### 1.2.1 Detailed Definitions
 
-|   name   |               definition               | denotation |
-| :------: | :------------------------------------: | :--------: |
-| 学校属性 | 所有知道的学校属性的数据集合组成的矩阵 |    X       |
-|          |                                        |            |
-|          |                                        |            |
+|     name     |                        definition                         |      denotation       |
+| :----------: | :-------------------------------------------------------: | :-------------------: |
+|   学校属性   |         评价一所学校的回报的数据值，共有p个数据值         |  $x_1,x_2,x_3...x_p$  |
+|  school_num  |                number of candidate schools                |           n           |
+|   绩效指数   |                    对一所学校的总评价                     |           Y           |
+| 简化后的指标 | 经过主成分分析后得到的一所学校的主要数据，共共有j个数据值 | $Z_1，Z_2，Z_3...Z_j$ |
+|   捐赠金额   |          对一所学校的捐赠金额，在一个假设集合中           |         $Z_i$         |
+|              |                                                           |                       |
 
 ### 1.2.2 Assumption
 
@@ -103,15 +104,81 @@ A
 ## 2.1 Symbols and Definitions
 
 ## 2.2 General Assumptions
-# 3. Articture our metrics
-## 3.1 Specify evalution norms
-## 3.2 Collect data
-## 3.3 Preprocess data
-# 4. Models
-# 5. Target
-## 5.1 define
+#  3. Articture our metrics
+## 3.1 数据维度过高的问题
+
+因为考虑的相关因素太多，导致结果过多，变量间的相关度高，为建模带来不便。因此希望能够用较少的变量来解释资料中大部分变异，将相关性高的变量转化成彼此相互独立或不相关的变量。所以，我们最终选择主成分分析法。
+
+## 3.2 利用主成分分析法（PCA）降低数据维度
+
+$x_1,x_2,...,x_p$为p个描述学校的原始特征，$c_1,c_2,...,c_p$表示各个变量的权重。为每个特征值加一个权重并求和得到s：
+$$
+s=c_1x_1+c_2x_2+...+c_px_p
+$$
+我们希望选择适当的权重能够更好地表现学校的效益，每个学校对应一个综合成绩，记为$s_1,s_2,...,s_n$,n为学校数量。如果这些数值很分散，就表明它区分的很好，即寻找这样一系列参数c，使得$s_1,s_2,s_3,...,s_n$尽可能的分散。它的统计学定义描述如下：
+
+设$X_1,X_2,...,X_p$表示以$x_1,x_2,...,x_p$为样本观测值的随机变量，如果能找到$c_1,c_2,...,c_p$使得
+$$
+Var(c_1X_1+c_2X_2+...+c_pX_p)\tag{3.1}
+$$
+的值达到最大，由于方差反映了数据差异的程度，也就表明我们抓住了这p个变量的最大变异。同该表达式必须加上一个限制，否则权值可能选择无穷大而没有意义，这里我们规定
+$$
+c_1^2+c_2^2+...+c_p^2=1             \tag{3.2}
+$$
+至此我们得到一个主成分方向$\vec{a}=[c_1,c_2,...,c_p]$,它是一个p-维空间的单位向量。但是一个主成分不足以代表原来的p个变量，因此需要寻找多个主成分，且第二个主成分不应该再包含第一个主成分的信息，即让这两个主成分的协方差为0，方向正交。
+
+设$Z_i$表示第i个主成分，$i=1,2,...,p,可设
+$$
+\begin{equation} 
+\left\{ 
+\begin{array}{lr} 
+Z_1=c_{11}X_1+c_{12}X_2+...+c_{1p}X_p,\\ 
+Z_2=c_{21}X_1+c_{22}X_2+...+c_{2p}X_p, \\ 
+...\\
+Z_{p}=c_{p1}X_1+c_{p2}X_2+...+c_{pp}X_p, 
+\end{array} \right. \end{equation}\tag{3.3}
+$$
+对于每个i，均满足等式（3.2）。接着需要确定$j(j<p)$的数值，即降低维度后的指标个数。
+
+计算每一个主成分方向对应的的特征值$\lambda_j(j=1,2,...,p)$的信息贡献率和累积贡献率。称
+$$
+b_j=\frac{\lambda_j}{\sum_{k=1}^{p}\lambda_k}\tag{3.4}
+$$
+为主成分$y_i$的信息贡献率。
+$$
+\alpha_j=\frac{\sum_{k=1}^{j}{\lambda_k}}{\sum_{k=1}^{p}{\lambda_k}}\tag{3.5}
+$$
+为主成分$y_1,y_2,...,y_j$的累积贡献率。当$\alpha_j$接近于1时，选择前j个指标变量，代替原来的p个指标。
+
+
+# 4. Determining the Performance Index
+
+由上面的主成分分析法可以得到j个主要的变量，但是他们都是标准化之后的值，并不具备原来的精确意义。至此，构件评价指数的准备工作就已完成，计算综合得分
+$$
+Z=\sum_{j=1}^{p}{b_jy_j}
+$$
+
+# 5. Determining Investment Strategy based on ROI
+
+Since we have already approximated the linear relation between the performance index with the 3 performance contributing variables, we want to know how increase in donation changes them. In this paper, we use Generalized Adaptive Model (GAM) to smoothly fit the relations. Generalized Adaptive Model is a generalized linear model in which the dependent variable depends linearly on unknown smooth functions of independent variables. The fitted curve of percentage of students who receive a Pell Grant is depicted below in Fig 4 (see the other two fitted curves in Appendix):
+
+![1543398609995](C:\Users\zmj\AppData\Roaming\Typora\typora-user-images\1543398609995.png)
+
+A Pell Grant is money the U.S. federal government provides directly for students who need it to pay for college. Intuitively, if the amount of donation an institution receives from other sources such as private donation increases, the institution is likely to use these donations to alleviate students’ financial stress, resulting in percentage of students who receive a Pell Grant. Thus it is reasonable to see a fitted curve downward sloping at most part. Also, in common sense, an increase in donation amount would lead to increase in the performance index. 
+
+![1543398671892](C:\Users\zmj\AppData\Roaming\Typora\typora-user-images\1543398671892.png)
+
+Again, we use fitted curve of percentage of students who receive a Pell Grant as an example. We modeled the blue fitted curve to represent the homogeneous relation between percentage of students who receive a Pell Grant and donation amount. Recall fitted ROI of percentage of students who receive a Pell Grant (f ROI1) is change in fitted values (∆f) over increase in donation amount (∆X). So fROI1 = ∆f/∆X According to assumption A2, the amount of each Goodgrant Foundation’s donation falls into apre-specifiedset,namely {500000,1000000,1500000,...,10000000}.
+
+Sowegetasetofpossible fitted ROI of percentage of students who receive a Pell Grant (fROI1). Clearly, fROI1 is de- pendent on both donation amount (X) and increase in donation amount (∆X). Calculation of fitted ROIs of other performance contributing variables is similar.
+$$
+ROI=\frac{Z}{F}
+$$
+The next step is to develop an optimal strategy including a list of institutions to be sponsored and the appropriate amount of money given to each institution. We adopt a two-step selection algorithm to find the global optimal allocation strategy. Since we have a finite set of possible ROI for every institution. The first step is to compare ROI among each institution’s set. By maximizing ROI for each institution, we determine the optimal amount of investment on each institution if we invest. Then, the next step is to rank all institutions with their respective maximal ROI. Given the budget constraint of money available ($100m), we pick up the institutions with the largest potential to improve on the performance indicator, namely the largest maximal ROI, until we exhaust the budget.
+
 # 6. 计算流程
 ## 6.1 数据清洗与处理
+>  因为慈善机构给出的学校比数据集中统计的学校数量要少很多，因此首要步骤是将这些备选学校的数据筛选出来，并且将学校官网、研究生数量等无关因素排除，最终筛选出毕业率、毕业后还款率、得奖的学生人数等p个与回报指数相关的指标。
  *  问题：我们发现数据文件中存在大量缺失值，数据集中含有缺失项的变量成为不完全变量，从缺失的分布我们认为属于随机缺失(missing random,MAR)。对于随机缺失，删除是、记录时不合适的，随机缺失可以通过已知变量对缺失值进行估计。如果单纯舍去缺失项会导致模型失准和信息丢失。
 * 必要性:数据缺失在许多研究领域都是一个复杂的问题。对数据挖掘来说，缺省值的存在，造成了以下影响： 
 	* 系统丢失了大量的有用信息；
@@ -152,6 +219,16 @@ A
             * filling manually不现实，舍去。 
             * Treating Missing Attribute values as Special values会导致严重的数据偏离，故不采用。
  * 计算：为了处理大量数据，我们使用了tensorflow作为计算工具，依照算法模型搭建了shallow网络以计算Widget。为了将输出值控制在限定范围内的同时保证合理分布，我们使用对数几率回归模型对输出进行约束。
+ *  数据标准化处理
+    已知有p个指标，为了解决量纲不同所带来的影响，我们需要对原始数据进行标准化处理，将$x_i$转化成标准值$\hat{x_i}$：
+    $$
+    \hat{x_{ij}}=\frac{x_{ij}-\mu_{j}}{s_j},i=1,2,3,...,n,j=1,2,3,...,p\tag{2.1}\\
+    \mu_j=\frac{1}{n}\sum_{i=1}^{n}{x_{ij}}\\
+    s_j=\sqrt{\frac{1}{n-1}\sum_{j=1}^{n}{(x_{ij}-\mu_j)}^2},j=1,2,...,p
+    $$
+    $\mu_j,s_j$是第i个指标的样本均值和样本标准差。
+
+
 
 # 7. Conclusions and Discussion
 
