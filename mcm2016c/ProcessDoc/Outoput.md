@@ -1,5 +1,11 @@
 # An Optimal Strategy of Donation for Educational Purpose
 
+***
+## Member
+* 71117133 张睦婕
+* 王雨婷
+* 71117417 卢立强
+
 
 # Summary
 
@@ -69,7 +75,10 @@ Finally, we calculate the ROI, defined as an increase in the performance index r
 | 18 | Upstate Medical University                           | 196307 | 0.968459056 | $4,928,640.87   |
 | 19 | St Louis College of Pharmacy                         | 179265 | 0.967265721 | $4,922,567.79   |
 | 20 | Samuel Merritt University                            | 122296 | 0.967202212 | $4,922,244.59   |
-|    |                                                      |        |             | $100,000,000.00 |
+***
+|Sum|$100,000,000.00|
+|:--|-:|
+| ||
 
 ***
 # 1. Introduction
@@ -134,7 +143,7 @@ The value of equation (3.1) is maximized. Since the variance reflects the degree
 $$
 c_1^2+c_2^2+...+c_p^2=1             \tag{3.2}
 $$
-So far we get a principal component direction $\vec{a}=[c_1,c_2,...,c_p]$, which is a unit vector of a p-dimensional space. But a principal component is not enough to represent the original p variables, so it is necessary to find multiple principal components, and the second principal component should not contain the information of the first principal component, that is, the covariance of the two principal components is 0, the direction is orthogonal.
+So far we get a principal component direction \vec{a}=[c_1,c_2,...,c_p], which is a unit vector of a p-dimensional space. But a principal component is not enough to represent the original p variables, so it is necessary to find multiple principal components, and the second principal component should not contain the information of the first principal component, that is, the covariance of the two principal components is 0, the direction is orthogonal.
 
 Let $Z_i$ denote the i-th principal component, $i=1,2,...,p, we can assume
 $$
@@ -175,7 +184,7 @@ Equation (4.2) is a linear calculation formula of the evaluation index obtained 
 
 The final calculated evaluation index is the ordinate, the school is the abscissa, and the distribution shown in the following figure is obtained by sorting the evaluation indicators from high to low.
 
-![1543416019431](C:\Users\zmj\AppData\Roaming\Typora\typora-user-images\1543416019431.png)
+![1543416019431](1543416019431.png)
 
 It can be seen that the evaluation indicators can distinguish the performance of each school very well. The index of the top schools is very high, and the subsequent data gradients are gradually flattened.
 
