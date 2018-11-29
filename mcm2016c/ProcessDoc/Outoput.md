@@ -3,7 +3,7 @@
 ***
 ## Member
 * 71117133 张睦婕
-* 王雨婷
+* 12016103 王雨婷
 * 71117417 卢立强
 
 
@@ -42,6 +42,7 @@ Finally, we calculate the ROI, defined as an increase in the performance index r
 - [7. Conclusions and Discussion](#7-conclusions-and-discussion)
     - [7.1 Conclusions](#71-conclusions)
     - [7.2 Limitation and extensions](#72-limitation-and-extensions)
+- [8. Reference](#8.-References)
 ***
 # Letter
 >
@@ -281,4 +282,19 @@ This paper manages to develop a fully data-based model to produce a provi- dent 
 
 * Our model only allows for a relatively simple linear model. A more gen- eral selection method is needed when applying to a complicated model.
 
-
+# 8. References
+[1] Schifrin, M., Chen L. (2015). Top 50 ROI Colleges: 2015 Grateful Grads In- dex. http://www.forbes.com/sites/schifrin/2015/07/29/top50roicolleges2015grateful- gradsindex/#285011fc15cc/
+[2] Burke, J. C. (2002). Funding public colleges and universities for performance.SUNYPress.
+[3] Cave, M. (1997). The use of performance indicators in higher education: The challenge of
+the quality movement. Jessica KingsleyPublishers.
+[4] Serban, A. M., & Burke, J. C. (1998). Meeting the performance funding challenge: A nine- state comparative analysis. Public Productivity & Management Review, 157-176.
+[5] Banta, T. W., Rudolph, L. B., Van Dyke, J., & Fisher, H. S. (1996). Performance funding
+comes of age in Tennessee. The Journal of Higher Education, 23-45.
+[6] Burke, J. C. (1998). Performance funding indicators: Concerns, values, and models for
+state colleges and universities. New directions for institutional research, 1998(97), 49-60.
+[7] Little, R. J., & Rubin, D. B. (2014). Statistical analysis with missing data. John Wiley & Sons.
+[8] Ehrenberg, R. G. (2004). Econometric studies of higher education. Journal of econometrics, 121(1), 19-37.
+[9] Rogg, K. L., Schmidt, D. B., Shull, C., & Schmitt, N. (2001). Human resource practices, organizationalclimate,andcustomersatisfaction.Journalofmanagement,27(4),431-449.
+[10] Tibshirani,R.(1996). Regression shrinkage and selection via the lasso. Journal oftheRoyal
+Statistical Society. Series B (Methodological), 267-288.
+[11] Usai, M. G., Goddard, M. E., & Hayes, B. J. (2009). LASSO with cross-validation for ge- nomic selection. Genetics research, 91(06), 427-436
