@@ -121,14 +121,14 @@ So far we get a principal component direction $\vec{a}=[c_1,c_2,...,c_p]$, which
 
 Let $Z_i$ denote the i-th principal component, $i=1,2,...,p, we can assume
 $$
-\begin{equation} 
+
 \left\{ 
 \begin{array}{lr} 
 Z_1=c_{11}X_1+c_{12}X_2+...+c_{1p}X_p,\\ 
 Z_2=c_{21}X_1+c_{22}X_2+...+c_{2p}X_p, \\ 
 ...\\
 Z_{p}=c_{p1}X_1+c_{p2}X_2+...+c_{pp}X_p, 
-\end{array} \right. \end{equation}\tag{3.3}
+\end{array} \right.\tag{3.3}
 $$
 For each i, the equation (3.2) is satisfied. Then you need to determine the value of $j(j<p)$, which is the number of indicators after the dimension is lowered.
 
