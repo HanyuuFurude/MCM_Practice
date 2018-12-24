@@ -1,19 +1,53 @@
 # idea
+
+# 宏观优化
+
 ## 优化目标：提升充电桩的利用率和总输出功。
-$$ loss =- \{\alpha_1\cdot sigomid (\frac{\sum(\omega_i\cdot\mu_i\cdot P_i)}{\sum(\omega_i\cdot P_i)})+ \alpha_2\cdot sigomid (\frac{\sum(\omega_i\cdot\mu_i\cdot P_i)}{\alpha_3\cdot\sum(price_i)} )\}$$
+
+$$ loss =- \{\alpha_1\cdot sigomid (\frac{\sum(\omega_i\cdot\eta_i\cdot P_i)}{\sum(\omega_i\cdot P_i)})+ \alpha_2\cdot sigomid (\frac{\sum(\omega_i\cdot\eta_i\cdot P_i)}{\alpha_3\cdot\sum(price_i)} )\}$$
 > $\alpha_1$:平衡参数1(利用率权重) \
 > $\omega_i$:地点权重 \
-> $\mu_i$：充电桩平均利用率（该充电桩） \
+> $\eta_i$：充电桩平均利用率（该充电桩） \
 > $P_i$:充电桩功率 \
 > $\alpha_2$:平衡参数2（功率权重）\
 > $\alpha_3$:平衡参数3（表现优化权重）\
 > $price_i$:充电桩投入（成本）
 
-> * 为何使用sigomid：提升综合指标的评定能力，方式出现单一指标得分高零一指标得分低的情况。
+> * 为何使用sigmoid：提升综合指标的评定能力，方式出现单一指标得分高零一指标得分低的情况。
+>
 > * $alpha_1$$alpha_2$如何计算：利用加油站的利用率和日消耗量匹配
+>
 > * $alpha_3$:用于调整sogomid函数的区分能力，设定为一般电桩的sigomid输出为0左右即可，所有的指标进行比较时需保证$\alpha_3$一致，否则没有指导意义。
+>
 > * 如何计算$\omega_i$:$\omega_i$依附与城市节点，其相对比值和不同城市的汽车持有数或人数或经济能力与加油站的总供给量成之比相等（查询数据）。平均值为1.
-> * 如何计算$\mu_i$:初始值，充电桩平均利用率（查询数据），后期在模拟过程中根据历史使用情况动态更改（历史加权）
+>
+> * 如何计算$\eta_i$:初始值，充电桩平均利用率（查询数据），后期在模拟过程中根据历史使用情况动态更改（历史加权）
+>
 > * $P_i$:产品规格
+>
 > * $price_i$:产品规格
+
+# 微观优化
+
+## 优化目标:使每个充电站点的位置和充电桩数目和快慢桩比例贴合城市职能配置
+
+### 特征指标
+* 站点数据
+  * $n_{QuickCharger}$:快桩数目
+  * $\eta_{QuickCharger}$:快桩活动时间占比
+  * $n_{SlowCharger}$:慢桩数量
+  * $\eta_{SlowCharger}$:慢桩活动时间占比
+  * $\bar P_i$:该站的日输出量平均值，用于评估该站的日输出需求
+  * $\sigma_i$:该站的日输出量的方差，用于评估该站的输出不稳定性为配置冗余量提供参考
+  * $\omega_i$:该站的重要性权重，用于排布站点的优先级将资源有限分配给重点站，重要性的初始值由汽油站的数据按比例给出，后期根据模拟情况动态更迭
+* 城市数据
+  * $coverage_i$:该城市的电动车覆盖率
+  * $P_{MaxChargePower}$:该车的最大充电功率
+  * $W_{BatteryCapacity}$:该车的电池容量
+  * $P_{EnablingEfficacy}$:该车的使能效能（平均每公里电耗）
+  * $W_{left}$:该车的剩余电池容量
+
+
+
 ## task 01
+
