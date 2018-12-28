@@ -10,6 +10,7 @@ class node:
 		self.omega = 0
 		if omega:
 			self.omega = omega
+		self.road=[]	#与外界的道路端口
 
 	def calcP(self):
 		sum = 0
