@@ -16,15 +16,12 @@ class car:
 			return 50
 		else:
 			return 5
-	def load(** key):
-		if (speed in key):
-			self.speed = speed
-		elif(length in key):
-			self.length = length
-		elif(size in key):
-			pass
-		pass
-		
+	def load(self,length = 0,size = None,capcity = 0,MAX_SPEED = 0,prior = 0 ):
+		self.length = length
+		self.size = size
+		self.capcity = capcity
+		self.MAX_SPEED = MAX_SPEED
+		self.prior = prior
 
 	def speedConv(self):
 		return self.speed*3.6
