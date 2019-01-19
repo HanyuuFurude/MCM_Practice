@@ -37,6 +37,6 @@
 
 # 总公式
 平均：
-$$Trans = \frac{\sum capicity_i}{t}$$
+$$Trans = \frac{\sum capicity_i(in\quad time\quad t \quad and  \quad distance \quad v*t)}{t}$$
 瞬时：
-$$dTrans = \frac{\sum capicity_i}{v}$$
+$$dTrans = \frac{\sum capicity_i(通过截面)}{v}$$
