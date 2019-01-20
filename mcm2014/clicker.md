@@ -36,18 +36,22 @@
 * 车道数
 
     * 变量，一般情况下为2，包含一个行车道一个超车道，根据老美国情（资料+引用）可增配至（双向）四、六车道
-    * [Overtaking](https://en.wikipedia.org/wiki/Overtaking), usually called "passing", is legal on all four or more lane roads and on most two-lane roads with sufficient sight distance. 
+    * [Overtaking](https://en.wikipedia.org/wiki/Overtaking), usually called "passing", is legal on all four or more lane roads and on most two-lane roads with sufficient sight distance.
     * *来源：Department of Transportation*. State of California. from the original on March 24, 2012. Retrieved June 3, 2013.
     * 车道容量（Capacity）：Lane capacity varies widely due to conditions such as neighboring lanes, lane width, elements next to the road, number of driveways, presence of parking, speed limits, number of heavy vehicles and so on – the range can be as low as 1000 passenger cars / hour to as high as 4800 passenger cars / hour but mostly falls between 1500 and 2400 passenger cars / hour.
     * *车道容量的来源：Guide to Traffic Management Part 3: Traffic Studies and Analysis*. [Austroads](https://en.wikipedia.org/wiki/Austroads). 2013. pp. Section 4.
 
 # 评价指标
+<<<<<<< HEAD
 
 为The Keep-Right-Except-To-Pass Rule 模型建立一个评价指标等价运输量，用于描述该模型的traffic flow。假设在路上行驶的车辆有两种，分别是运送货物的和搭载乘客的，总的等价运量等于客流量加物流量。但是因为客流量的单位是人，物品运输的单位是吨，所以这里涉及一个单位换算的问题。...............
 
 
 
 * 等价运量
+=======
+* //TODO: 等价运量
+>>>>>>> 5cb2d8c87ee436ce8031c9b06221245e9cad1fde
   * 客流量 计量单位：吨
   * 物流量 计量单位：人次
   * 根据物流每吨公里价和一般客车的人均公里价换算，统一成吨比较好？（讨论点）
@@ -81,7 +85,7 @@
 		self.MAX_SPEED =0#最大速度 m/s
 		self.prior = 5 # 优先级
 ```
-代码贴这里了你描述一下有哪些参数画一下参数约定表
+//TODO:代码贴这里了你描述一下有哪些参数画一下参数约定表
 
 ## 两辆车之间
 
@@ -100,24 +104,24 @@
 * 交通阻塞环（学名叫啥忘了emmm……）（通过模拟应当出现此效果）
     * 解决方案，人类驾驶约定堵塞时将自己的车控制在前后两车的中点上（啥地方看到的解决方案2333，到时候贴数据证明）
     * 统一控制就没这种问题了
-* 侵限与事故
+* 侵限与事故//TODO:写成论文片段
     * 划定车辆前端单车道（公式计算）为阻塞区禁止侵限区内出现其他车辆或异物，若出现就最大ABS要么停下来等前车开走要么boom，事故区约定一段时间的事故处理时间并做临时固定阻塞区模拟正式环境下的事故处理
-* 车道占用率问题
+* 车道占用率问题//TODO:写成论文片段
     * 计算车辆总长度比上道路总长度，可以结合速度计算负荷效率
-* 连续变道
+* 连续变道//TODO:写成论文片段
     * 连续变道在人类驾驶情况下是禁止的（文献引用）
     * 同一控制下不存在这个问题
-* 变道过程与变道动作中的侵限判定（有空考虑视野问题）
+* 变道过程与变道动作中的侵限判定（有空考虑视野问题）//TODO:写成论文片段
     * 变道时阻塞区将扩展到原车道和待转入车道直至变道动作完成（有一段时间，这段时间会急剧增大阻塞面积并堵塞多个车道）
-* 弯道
+* 弯道//TODO:写成论文片段
     * 减速区（易造成堵塞环和堵塞）
-* 匝道
+* 匝道//TODO:写成论文片段
     * 高速出入口（效率高的时候匝道也会成为瓶颈造成堵塞，但是没有堵塞环了（都开完了））
-* 分岔口
+* 分岔口//TODO:写成论文片段
     * 减速+车道选择（必须为有意识的提前选择车道）
 * 环道
     * //还没想明白，可以不上，模拟的是绕城高速的情况
-# 讨论情况
+# 讨论情况//TODO:写成论文片段
 * 车流量负荷
     * 高负荷时……
     * 中等负荷时……
