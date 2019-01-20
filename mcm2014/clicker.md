@@ -2,7 +2,7 @@
 
 行车问题
 
-在宏观上而言在空间上是车辆是离散的时间上可以看作是离散的（对时间细粒度不敏感）道路的状态也是离散的（对道路细粒度不敏感），在微观上而言，对于每一个车辆来说，他们只需关心自己和自己周围有限的对象（其他车辆，道路等）即可做出判断 ，由于道路问题在车流量变更在有限范围内的时候可以看作是周期性或者混沌型，由此可以对指定交通规则下指定负荷条件下的道路运输情况做出定量评估，我们将模型以元胞机的变种定义并运行模拟，该系统为道路交通中有关秩序、紊动 、混沌 、非对称、分形等系统整体行为与复杂现象的研究提供了一个有效的模型工具，通过对各种情况进行的模拟，（这边结论瞎蒙的）我们发现靠右行车靠左超车的模式在普通负载以人类驾驶员为主的道路上相对较高，效率使用率达到40%，低负载下使用相对合理在但是高负载下会直接造成近80%的占空率，安全性一般，然而对于通过一定算法安排的控制体系来说，该规则浪费空间现象较为严重，表现仅为，针对无中心的控制体系，我们使用……规则将占用率进化到了……同时保证安全性
+在宏观上而言在空间上是车辆是离散的，时间上可以看作是离散的（对时间细粒度不敏感），道路的状态也是离散的（对道路细粒度不敏感）；在微观上而言，对于每一个车辆来说，他们只需关心自己和自己周围有限的对象（其他车辆，道路等）即可做出判断 ，由于道路问题在车流量变更在有限范围内的时候可以看作是周期性或者混沌型，由此可以对指定交通规则下指定负荷条件下的道路运输情况做出定量评估，我们将模型以元胞机的变种定义并运行模拟，该系统为道路交通中有关秩序、紊动 、混沌 、非对称、分形等系统整体行为与复杂现象的研究提供了一个有效的模型工具，通过对各种情况进行的模拟，（这边结论瞎蒙的）我们发现靠右行车靠左超车的模式在普通负载以人类驾驶员为主的道路上相对较高，效率使用率达到40%，低负载下使用相对合理在但是高负载下会直接造成近80%的占空率，安全性一般，然而对于通过一定算法安排的控制体系来说，该规则浪费空间现象较为严重，表现仅为，针对无中心的控制体系，我们使用……规则将占用率进化到了……同时保证安全性
 
 # Tips
 
@@ -11,11 +11,24 @@
 # limits
 
 * 安全跟车距离
-    * //TODO:这个代码我写了你把代码用文字描述一下再在前面加个根据xx政策+引用就行
+
+    * 根据《中华人民共和国道路交通安全法实施条例》第八十条，机动车在高速公路上行驶，车速超过每小时100公里时，应当与同车道前车保持100米以上的距离，车速低于每小时100公里时，与同车道前车距离可以适当缩短，但最小距离不得少于50米。
+
+    * 没找到老美的，都是单纯的说一句保持距离。。。不过可以编一句，根据Arizona的政府数据。["Driving Tips & Rules for Easy Car Rental in USA"](http://www.usacarsrental.com/useful-stuff/). *Usacarsrental.com*. Retrieved 2017-07-27.
+
 * 车辆限速
+
     * //TODO:不同车型的限速（轿车120，客运+货车100，这个是兔子的，到时候改成老美的），老美日常国情出处同上
+    * On rural [Interstate Highways](https://en.wikipedia.org/wiki/Interstate_Highway_System) and other [freeways](https://en.wikipedia.org/wiki/Controlled-access_highway), the speed limit ranges from 60 mph (96 km/h) in Hawaii to 85 mph (136 km/h) in parts of [Texas](https://en.wikipedia.org/wiki/Texas). 从维基百科（Wikipedia）抄来的（文件夹中附图）
+    * 这里我们采用Arizona州的数据，Freeway（rural）是105-121km/h，Freeway（urban）是89-105km/h。数据来源是Arizona Statutes Chapter 3 Article 6 [State Legislature](http://www.azleg.state.az.us/ArizonaRevisedStatutes.asp?Title=28%7CArizona)
+
 * 车道数
-    * 变量，一般情况下为2，包含一个行车道一个超车道，根据老美国情（资料+引用）可增配至（双向）六、八车道
+
+    * 变量，一般情况下为2，包含一个行车道一个超车道，根据老美国情（资料+引用）可增配至（双向）四、六车道
+    * [Overtaking](https://en.wikipedia.org/wiki/Overtaking), usually called "passing", is legal on all four or more lane roads and on most two-lane roads with sufficient sight distance. 
+    * *来源：Department of Transportation*. State of California. from the original on March 24, 2012. Retrieved June 3, 2013.
+    * 车道容量（Capacity）：Lane capacity varies widely due to conditions such as neighboring lanes, lane width, elements next to the road, number of driveways, presence of parking, speed limits, number of heavy vehicles and so on – the range can be as low as 1000 passenger cars / hour to as high as 4800 passenger cars / hour but mostly falls between 1500 and 2400 passenger cars / hour.
+    * *车道容量的来源：Guide to Traffic Management Part 3: Traffic Studies and Analysis*. [Austroads](https://en.wikipedia.org/wiki/Austroads). 2013. pp. Section 4.
 
 # 评价指标
 * 等价运量
