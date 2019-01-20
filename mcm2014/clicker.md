@@ -8,7 +8,18 @@
 
 下面出现的所有常数性常量我都没有查过鹰酱的国情emmm……这个得麻烦你慢慢查+引用收集了emmm……
 
+# assumption
+
+* 在车道上运行的车有两种，一种是运送货物的，一种是搭载乘客的
+* 在城区行驶的车辆都是小型轿车，在rural行驶都是大型客车和货车
+
 # limits
+
+我们对行驶在高速公路上的车辆建立一个宏观模型，在这个模型中有如下限制：安全的跟车距离、车辆的最高速度和车道数。因为美国各州的交通规则都不尽相同，Figure1，例如On rural [Interstate Highways](https://en.wikipedia.org/wiki/Interstate_Highway_System) and other [freeways](https://en.wikipedia.org/wiki/Controlled-access_highway), the speed limit ranges from 60 mph (96 km/h) in Hawaii to 85 mph (136 km/h) in parts of [Texas](https://en.wikipedia.org/wiki/Texas). 因此，我们选取Arizona州作为样例进行分析。根据Arizona州政府交通网站的数据，在高速公路行驶的车辆应当与前车保持安全的距离，这个距离与车速有关。当车速超过100km/h时，应当与同车道的前车保持100m以上的距离；车速低于100/h的时候，可以与前车适当缩短距离，但是最小距离不得少于50m。同样是Arizona州，在urban高速公路上行驶的限速从89km/h到105km/h，rural从105km/h到121km/h，车道数量有两车道、四车道（单向）即双向一共4、8条车道。
+
+![](F:\github\MCM_Practice\mcm2014\220px-US_Speed_Limits_May_2015.svg.png)
+
+
 
 * 安全跟车距离
 
@@ -31,11 +42,35 @@
     * *车道容量的来源：Guide to Traffic Management Part 3: Traffic Studies and Analysis*. [Austroads](https://en.wikipedia.org/wiki/Austroads). 2013. pp. Section 4.
 
 # 评价指标
+
+为The Keep-Right-Except-To-Pass Rule 模型建立一个评价指标等价运输量，用于描述该模型的traffic flow。假设在路上行驶的车辆有两种，分别是运送货物的和搭载乘客的，总的等价运量等于客流量加物流量。但是因为客流量的单位是人，物品运输的单位是吨，所以这里涉及一个单位换算的问题。...............
+
+
+
 * 等价运量
   * 客流量 计量单位：吨
   * 物流量 计量单位：人次
   * 根据物流每吨公里价和一般客车的人均公里价换算，统一成吨比较好？（讨论点）
 # （伪）元胞参数
+
+## 单个车辆
+
+在宏观上而言在空间上是车辆是离散的，时间上可以看作是离散的（对时间细粒度不敏感），道路的状态也是离散的（对道路细粒度不敏感）；在微观上而言，对于每一个车辆来说，他们只需关心自己和自己周围有限的对象（其他车辆，道路等）即可做出判断 ,因此可以用元胞模型的变异来描述时间和空间上离散的车流，这里我们将每辆车看成一个元胞。每一个元胞都有如下参数：
+
+|           |                                         |
+| --------- | --------------------------------------- |
+| speed     | speed of a car                          |
+| length    | length of a car                         |
+| size      | type of a car (0:轿车 1：大型客车/货车) |
+| capcity   | equivalent load                         |
+| MAX_SPEED | maximun speed                           |
+| prior     | priority                                |
+
+![](F:\github\MCM_Practice\mcm2014\car.jpg)
+
+* 
+
+
 
 ``` py
 	def __init__(self):
@@ -48,11 +83,19 @@
 ```
 代码贴这里了你描述一下有哪些参数画一下参数约定表
 
+## 两辆车之间
+
+![](F:\github\MCM_Practice\mcm2014\overtaking.jpg)
+
+两车之间存在速度差，以及相对距离。
+
 # 模型计算
 
 //TODO:占坑明天我做，东西比较多我困了让我先想一晚上
 
 # 特殊情况
+
+
 
 * 交通阻塞环（学名叫啥忘了emmm……）（通过模拟应当出现此效果）
     * 解决方案，人类驾驶约定堵塞时将自己的车控制在前后两车的中点上（啥地方看到的解决方案2333，到时候贴数据证明）
