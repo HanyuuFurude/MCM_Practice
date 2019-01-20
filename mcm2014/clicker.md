@@ -16,7 +16,7 @@
 
 # limits
 
-我们对行驶在高速公路上的车辆建立一个宏观模型，在这个模型中有如下限制：安全的跟车距离、车辆的最高速度和车道数。因为美国各州的交通规则都不尽相同，Figure1，例如On rural [Interstate Highways](https://en.wikipedia.org/wiki/Interstate_Highway_System) and other [freeways](https://en.wikipedia.org/wiki/Controlled-access_highway), the speed limit ranges from 60 mph (96 km/h) in Hawaii to 85 mph (136 km/h) in parts of [Texas](https://en.wikipedia.org/wiki/Texas). 因此，我们选取Arizona州作为样例进行分析。根据Arizona州政府交通网站的数据，在高速公路行驶的车辆应当与前车保持安全的距离，这个距离与车速有关。当车速超过100km/h时，应当与同车道的前车保持100m以上的距离；车速低于100/h的时候，可以与前车适当缩短距离，但是最小距离不得少于50m。同样是Arizona州，在urban高速公路上行驶的限速从89km/h到105km/h，rural从105km/h到121km/h，车道数量有两车道、四车道（单向）即双向一共4、8条车道。
+我们对行驶在高速公路上的车辆建立一个宏观模型，在这个模型中有如下限制：**安全的跟车距离**、**车辆的最高速度和车道数**。因为美国各州的交通规则都不尽相同，Figure1，例如On rural [Interstate Highways](https://en.wikipedia.org/wiki/Interstate_Highway_System) and other [freeways](https://en.wikipedia.org/wiki/Controlled-access_highway), the speed limit ranges from 60 mph (96 km/h) in Hawaii to 85 mph (136 km/h) in parts of [Texas](https://en.wikipedia.org/wiki/Texas). 因此，我们选取Arizona州作为样例进行分析。根据Arizona州政府交通网站的数据，在高速公路行驶的车辆应当与前车保持安全的距离，这个距离与车速有关。当车速超过100km/h时，应当与同车道的前车保持100m以上的距离；车速低于100/h的时候，可以与前车适当缩短距离，但是最小距离不得少于50m。同样是Arizona州，在urban高速公路上行驶的限速从89km/h到105km/h，rural从105km/h到121km/h，车道数量有两车道、四车道（单向）即双向一共4、8条车道。
 
 ![](F:\github\MCM_Practice\mcm2014\220px-US_Speed_Limits_May_2015.svg.png)
 
@@ -24,26 +24,26 @@
 
 * 安全跟车距离
 
-    * 根据《中华人民共和国道路交通安全法实施条例》第八十条，机动车在高速公路上行驶，车速超过每小时100公里时，应当与同车道前车保持100米以上的距离，车速低于每小时100公里时，与同车道前车距离可以适当缩短，但最小距离不得少于50米。
+    * ~~根据《中华人民共和国道路交通安全法实施条例》第八十条，机动车在高速公路上行驶，车速超过每小时100公里时，应当与同车道前车保持100米以上的距离，车速低于每小时100公里时，与同车道前车距离可以适当缩短，但最小距离不得少于50米。~~
 
     * 没找到老美的，都是单纯的说一句保持距离。。。不过可以编一句，根据Arizona的政府数据。["Driving Tips & Rules for Easy Car Rental in USA"](http://www.usacarsrental.com/useful-stuff/). *Usacarsrental.com*. Retrieved 2017-07-27.
 
 * 车辆限速
 
-    * //TODO:不同车型的限速（轿车120，客运+货车100，这个是兔子的，到时候改成老美的），老美日常国情出处同上
+    * //TODO:**不同车型的限速**（轿车120，客运+货车100，这个是兔子的，到时候改成老美的），老美日常国情出处同上
     * On rural [Interstate Highways](https://en.wikipedia.org/wiki/Interstate_Highway_System) and other [freeways](https://en.wikipedia.org/wiki/Controlled-access_highway), the speed limit ranges from 60 mph (96 km/h) in Hawaii to 85 mph (136 km/h) in parts of [Texas](https://en.wikipedia.org/wiki/Texas). 从维基百科（Wikipedia）抄来的（文件夹中附图）
     * 这里我们采用Arizona州的数据，Freeway（rural）是105-121km/h，Freeway（urban）是89-105km/h。数据来源是Arizona Statutes Chapter 3 Article 6 [State Legislature](http://www.azleg.state.az.us/ArizonaRevisedStatutes.asp?Title=28%7CArizona)
 
 * 车道数
 
-    * 变量，一般情况下为2，包含一个行车道一个超车道，根据老美国情（资料+引用）可增配至（双向）四、六车道
+    * 变量，一般情况下为2，包含一个行车道一个超车道，根据**老美国情**（资料+引用）可增配至（双向）四、六车道
     * [Overtaking](https://en.wikipedia.org/wiki/Overtaking), usually called "passing", is legal on all four or more lane roads and on most two-lane roads with sufficient sight distance.
     * *来源：Department of Transportation*. State of California. from the original on March 24, 2012. Retrieved June 3, 2013.
     * 车道容量（Capacity）：Lane capacity varies widely due to conditions such as neighboring lanes, lane width, elements next to the road, number of driveways, presence of parking, speed limits, number of heavy vehicles and so on – the range can be as low as 1000 passenger cars / hour to as high as 4800 passenger cars / hour but mostly falls between 1500 and 2400 passenger cars / hour.
     * *车道容量的来源：Guide to Traffic Management Part 3: Traffic Studies and Analysis*. [Austroads](https://en.wikipedia.org/wiki/Austroads). 2013. pp. Section 4.
 
 # 评价指标
-<<<<<<< HEAD
+
 
 为The Keep-Right-Except-To-Pass Rule 模型建立一个评价指标等价运输量，用于描述该模型的traffic flow。假设在路上行驶的车辆有两种，分别是运送货物的和搭载乘客的，总的等价运量等于客流量加物流量。但是因为客流量的单位是人，物品运输的单位是吨，所以这里涉及一个单位换算的问题。...............
 
@@ -52,24 +52,24 @@
 * 等价运量
 =======
 * //TODO: 等价运量
->>>>>>> 5cb2d8c87ee436ce8031c9b06221245e9cad1fde
+>>>>>>> 
   * 客流量 计量单位：吨
   * 物流量 计量单位：人次
-  * 根据物流每吨公里价和一般客车的人均公里价换算，统一成吨比较好？（讨论点）
+  * 根据**物流每吨公里价和一般客车的人均公里价换算**，统一成吨比较好？（讨论点）
 # （伪）元胞参数
 
 ## 单个车辆
 
 在宏观上而言在空间上是车辆是离散的，时间上可以看作是离散的（对时间细粒度不敏感），道路的状态也是离散的（对道路细粒度不敏感）；在微观上而言，对于每一个车辆来说，他们只需关心自己和自己周围有限的对象（其他车辆，道路等）即可做出判断 ,因此可以用元胞模型的变异来描述时间和空间上离散的车流，这里我们将每辆车看成一个元胞。每一个元胞都有如下参数：
 
-|           |                                         |
-| --------- | --------------------------------------- |
-| speed     | speed of a car                          |
-| length    | length of a car                         |
-| size      | type of a car (0:轿车 1：大型客车/货车) |
-| capcity   | equivalent load                         |
-| MAX_SPEED | maximun speed                           |
-| prior     | priority                                |
+| **这边参数更新了许多，去代码那边重新提一下** |                                         |
+| -------------------------------------------- | --------------------------------------- |
+| speed                                        | speed of a car                          |
+| length                                       | length of a car                         |
+| size                                         | type of a car (0:轿车 1：大型客车/货车) |
+| capcity                                      | equivalent load                         |
+| MAX_SPEED                                    | maximun speed                           |
+| prior                                        | priority                                |
 
 ![](F:\github\MCM_Practice\mcm2014\car.jpg)
 
@@ -128,7 +128,7 @@
 
     * 计算车辆总长度比上道路总长度，可以结合速度计算负荷效率
 
-* 连续变道//TODO:写成论文片段
+* **连续变道**（根据法规和安全问题，这是不允许的）//TODO:写成论文片段
 
     # 论文内容
 
@@ -173,7 +173,7 @@ zmj：这这这，编不来。。。
 
 
 * 车流量负荷
-    * 高负荷时……
+    * **高负荷时**……（鹰酱高峰期的占用率，或者查车流代替）
     * 中等负荷时……
     * 低负荷时……
     * 依靠不同的发车概率加载负荷
