@@ -5,6 +5,7 @@ import math
 SECONDS_PER_CLOCK = 5  # 时钟时间数
 JUM_PROCESS_CLOCK = 1000  # 事故处理时钟数
 
+
 class car:
 	uuid = 0
 	
@@ -33,14 +34,15 @@ class car:
 			return 50
 		else:
 			return 5
-	def saftyFront(self):   # 安全跟车前限 m
-		return self.position+self.length+self.saftyDistence()
-	def confilct(self,car): # 合并车道侵限判定（不考虑车道）
-		if self.position>car.saftyFront():
-			return False    # 无冲突，车辆在后方
-		elif self.saftyDistence()<car.position:
-			return False    # 无冲突，车辆在前方
-		
+	
+	def saftyFront(self):  # 安全跟车前限 m
+		return self.position + self.length + self.saftyDistence()
+	
+	def confilct(self, car):  # 合并车道侵限判定（不考虑车道）
+		if self.position > car.saftyFront():
+			return False  # 无冲突，车辆在后方
+		elif self.saftyDistence() < car.position:
+			return False  # 无冲突，车辆在前方
 	
 	def load(self, length=0, size=None, capacity=0, MAX_SPEED=0, aacc=0, dacc=0, prior=0, position=0, lane=0,
 	         isCar=True, ):
@@ -58,6 +60,8 @@ class car:
 	
 	def speedConv(self):  # 码制转换
 		return self.speed * 3.6
+
+
 # def update(self):
 # 	pass
 
@@ -74,7 +78,6 @@ class car:
 #
 #
 class road:  # 道路
-
 	
 	def __init__(self, length):
 		self.length = length
@@ -95,12 +98,20 @@ class road:  # 道路
 			begin.length += x.length
 			self.carList.remove(x)
 		self.carList.append(begin)
-	def laneCount(self,position):   #计算给出坐标系下车道数
+	
+	def laneCount(self, position):  # 计算给出坐标系下车道数
 		res = 0
 		for x in self.laneList:
-			if x[0]>position:
+			if x[0] > position:
 				return res
-			res=x[1]
+			res = x[1]
+	
+	def speedLimit(self, position):
+		res = 0
+		for x in self.speedLimit():
+			if x[0] > position:
+				return res
+			res = x[1]
 	
 	#
 	# for x in range(len(carList)-1):
@@ -108,64 +119,57 @@ class road:  # 道路
 	# 		if (y[1].uuid == x.uuid):
 	# 			self.carList.remove(y)
 	def update(self):
-		flag = False # false:无侵限，保持速度或加速
-		#调整速度和变道策略
+		flag = False  # false:无侵限，保持速度或加速
+		# 调整速度和变道策略
 		for x in self.carList:
 			for i in self.carList:
 				if not x.confilct(i):  # 无侵限，过滤
 					continue
-				elif x.position>=i.position:   # 后车侵限
+				elif x.position >= i.position:  # 后车侵限
 					continue
-				else: #前车/障碍侵限
+				else:  # 前车/障碍侵限
 					flag = True
-					if self.laneCount(x)>x.lane: #未在最高速道上
+					if self.laneCount(x) > x.lane:  # 未在最高速道上
 						for j in self.carList:
-							if  math.floor(j.lane)==x.lane+1:   #已经考虑了变道中的车辆的双占用
-								if x.confilct(j):   # 不允许变道，制动
-									x.speed-=x.dacc*SECONDS_PER_CLOCK   # 制动
-									if x.speed<0:
+							if math.floor(j.lane) == x.lane + 1:  # 已经考虑了变道中的车辆的双占用
+								if x.confilct(j):  # 不允许变道，制动
+									x.speed -= x.dacc * SECONDS_PER_CLOCK  # 制动
+									if x.speed < 0:
 										x.speed = 0
-									flag=True
+									flag = True
 									break
-						x.lane+=0.3 #直接变道
+						x.lane += 0.3  # 直接变道
 						flag = True
 						break
-					else:   #在最高速道上，直接制动
+					else:  # 在最高速道上，直接制动
 						x.speed -= x.dacc * SECONDS_PER_CLOCK  # 制动
 						if x.speed < 0:
 							x.speed = 0
-						flag=True
+						flag = True
 						break
-		#
-		for x in
+			if not flag:    #正常0
+				if x.speed < self.speedLimit(x.position) and x.speed < x.MAX_SPEED:
+					x.speed += x.aacc * SECONDS_PER_CLOCK
+					if x.speed>self.speedLimit(x.position) or x> x.MAX_SPEED:
+						x=min(self.speedLimit(x.position),x.MAX_SPEED)
 		# 计算下一帧的位置
 		for x in self.carList:
-			if x.uuid>0: #过滤障碍
-				x.position+=x.speed * SECONDS_PER_CLOCK # 微元位移，直接用末状态算就完事了
+			if x.uuid > 0:  # 过滤障碍
+				x.position += x.speed * SECONDS_PER_CLOCK  # 微元位移，直接用末状态算就完事了
 			else:
-				x.capacity+=1
-				if x.capacity>= JUM_PROCESS_CLOCK:   #时间到了，事故处理完毕
-					self.carList.remove(x)  #拿走拿走
-					
-					
-					
-					
-					
-				
-				
-				
-				
-				# if (i.position<=x.position):    #后方车辆和自己，直接过滤
-				# 	continue
-				# elif(i.position>x.saftyFront()): #前方安全距离外车辆，可加速或保持最大速度直行（超车道考虑并道）
-				# 	if (x.lane>0):  #超车道，观测行车道状况
-				# 		for j in self.carList:
-				# 			if j.lane == x.lane - 1:    #快速过滤非目标车道车辆
-				#
-				# 	if(x.speed==x.MAX_SPEED):
-				# 		pass
-					
-				
+				x.capacity += 1
+				if x.capacity >= JUM_PROCESS_CLOCK:  # 时间到了，事故处理完毕
+					self.carList.remove(x)  # 拿走拿走
+			
+			# if (i.position<=x.position):    #后方车辆和自己，直接过滤
+			# 	continue
+			# elif(i.position>x.saftyFront()): #前方安全距离外车辆，可加速或保持最大速度直行（超车道考虑并道）
+			# 	if (x.lane>0):  #超车道，观测行车道状况
+			# 		for j in self.carList:
+			# 			if j.lane == x.lane - 1:    #快速过滤非目标车道车辆
+			#
+			# 	if(x.speed==x.MAX_SPEED):
+			# 		pass
 
 # def crash(self, carList):  # 事故处理
 # 	begin = carList[0]  # 记录最小里程车
@@ -182,3 +186,6 @@ class road:  # 道路
 # 		if x.uuid==x[1].uuid:
 # 			return x[0]
 # 	pass
+if __name__=='__main__':
+	exp = road(10000)
+	
