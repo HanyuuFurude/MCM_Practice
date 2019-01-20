@@ -25,7 +25,7 @@
 * 车道数
 
     * 变量，一般情况下为2，包含一个行车道一个超车道，根据老美国情（资料+引用）可增配至（双向）四、六车道
-    * [Overtaking](https://en.wikipedia.org/wiki/Overtaking), usually called "passing", is legal on all four or more lane roads and on most two-lane roads with sufficient sight distance. 
+    * [Overtaking](https://en.wikipedia.org/wiki/Overtaking), usually called "passing", is legal on all four or more lane roads and on most two-lane roads with sufficient sight distance.
     * *来源：Department of Transportation*. State of California. from the original on March 24, 2012. Retrieved June 3, 2013.
     * 车道容量（Capacity）：Lane capacity varies widely due to conditions such as neighboring lanes, lane width, elements next to the road, number of driveways, presence of parking, speed limits, number of heavy vehicles and so on – the range can be as low as 1000 passenger cars / hour to as high as 4800 passenger cars / hour but mostly falls between 1500 and 2400 passenger cars / hour.
     * *车道容量的来源：Guide to Traffic Management Part 3: Traffic Studies and Analysis*. [Austroads](https://en.wikipedia.org/wiki/Austroads). 2013. pp. Section 4.
