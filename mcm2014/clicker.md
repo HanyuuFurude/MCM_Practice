@@ -30,7 +30,7 @@
 
 * 车辆限速
 
-    * //TODO:**不同车型的限速**（轿车120，客运+货车100，这个是兔子的，到时候改成老美的），老美日常国情出处同上
+    * //TODO:**不同车型的限速**~~（轿车120，客运+货车100，这个是兔子的，到时候改成老美的），老美日常国情出处同上~~同一限速100km/h
     * On rural [Interstate Highways](https://en.wikipedia.org/wiki/Interstate_Highway_System) and other [freeways](https://en.wikipedia.org/wiki/Controlled-access_highway), the speed limit ranges from 60 mph (96 km/h) in Hawaii to 85 mph (136 km/h) in parts of [Texas](https://en.wikipedia.org/wiki/Texas). 从维基百科（Wikipedia）抄来的（文件夹中附图）
     * 这里我们采用Arizona州的数据，Freeway（rural）是105-121km/h，Freeway（urban）是89-105km/h。数据来源是Arizona Statutes Chapter 3 Article 6 [State Legislature](http://www.azleg.state.az.us/ArizonaRevisedStatutes.asp?Title=28%7CArizona)
 
@@ -52,7 +52,6 @@
 * 等价运量
 =======
 * //TODO: 等价运量
->>>>>>> 
   * 客流量 计量单位：吨
   * 物流量 计量单位：人次
   * 根据**物流每吨公里价和一般客车的人均公里价换算**，统一成吨比较好？（讨论点）
@@ -73,7 +72,7 @@
 
 ![](F:\github\MCM_Practice\mcm2014\car.jpg)
 
-* 
+*
 
 
 
