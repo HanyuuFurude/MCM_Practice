@@ -64,6 +64,13 @@ class Car:
         return self.speed * 3.6
 
 
+def n2si(speed):  # km/h to m/s
+    return speed / 3.6
+
+
+def si2n(speed):  # m/s to km/h
+    return speed * 3.6
+
 # def update(self):
 # 	pass
 
@@ -212,7 +219,7 @@ def newCar(carSize, road):
         size=size,
         capacity=carSize[seed][1],
         MAX_SPEED=carSize[seed][2],
-        aacc=5,
+        aacc=carSize[seed][4],
         dacc=carSize[seed][3],
         prior=0,
         lane=0
@@ -226,15 +233,22 @@ def newCar(carSize, road):
         road.addCar(new)
 
 
-if __name__ == '__main__':
+TEST_DEEPTH = 1e4  # 测试深度
+randV = 10  # 每个时钟生成车辆的概率的倒数
+SPEED_LIMITS = 100  # 限速
+LANE_COUNT = 2  # 车道数
+
+
+def com(test_deepth=TEST_DEEPTH, randv=randV, speed_limits=SPEED_LIMITS, lane_count=LANE_COUNT):
     print("[Hanyuu debuging]")
     # 数据载入
     roadlength = open("./config/roadlength.txt")
     exp = Road(int(roadlength.read()))
-    exp.speedLimits.append([0, 100])
-    exp.laneList.append([0, 2])
-    print("[roadlength]"+str(exp.length))
-    readcar = open("./config/Car.txt")
+    exp.speedLimits.append([0, speed_limits])
+    exp.laneList.append([0, lane_count])
+    print("[roadlength]" + str(exp.length))
+    roadlength.close()
+    # readcar = open("./config/Car.txt")
     carSize = []
     temp = []
     with open("./config/Car.txt") as car:
@@ -251,13 +265,31 @@ if __name__ == '__main__':
     # CLOCK循环
     clock = 0
     sum = 0
-    while (True):
-        iccc = random.randint(0, 10)
+    ress = 0
+    while (clock <= test_deepth):
+        iccc = random.randint(0, randv)
         if iccc == 0:
             newCar(carSize, exp)
-        sum += exp.update()
+        ress += exp.update()
+        sum += ress
         clock += 1
-        if clock %1000 == 0:
+        if clock % 1000 == 0:
             print('[clock]' + str(clock))
             print('[sum]' + str(sum))
-            output = 
+            print('[res]' + str(ress))
+            output = open("./result/rv=" + str(randv) + ",sl=" +
+                          str(speed_limits) + ",lc=" + str(lane_count) + '.log', 'a+')
+            output.writelines(str(clock) + '\t' + str(sum)+'\t'+str(ress) + '\n')
+            output.close()
+            ress = 0
+
+
+if __name__ == '__main__':
+    # for sl in range(5):
+    #     com(speed_limits=sl * 10 + 80)
+    # for lc in range(5):
+    #     com(lane_count=lc + 1)
+    # for rv in range(10):
+    #     com(randv=rv * 5+5)
+    for rv in range(4):
+        com(randv=4-rv)
