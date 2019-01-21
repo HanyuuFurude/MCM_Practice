@@ -85,10 +85,10 @@ class Road:  # 道路
         self.length = length
         self.carList = []  # 当前占用该路段微元的车辆列表（事故区域算速度为0在特定时间存在的的特殊“车辆”）挂载车辆尾部
         self.laneList = []  # 道路上车道情况列表，第一参数表示里程，第二参数表示车道数
-        self.SpeedLimits = []  # 特殊路段限速，第一参数表示车型，第二参数表示限速
+        self.speedLimits = []  # 特殊路段限速，第一参数表示车型，第二参数表示限速
 
     def addCar(self, car):  # 从起点加载一辆新车
-        self.carList.append([0, car])
+        self.carList.append(car)
 
     def crash(self, carList):  # 事故处理
         begin = carList[0]  # 保存头车
@@ -107,13 +107,15 @@ class Road:  # 道路
             if x[0] > position:
                 return res
             res = x[1]
+        return self.laneList[0][1]
 
     def speedLimit(self, position):
         res = 0
-        for x in self.speedLimit():
+        for x in self.speedLimits:
             if x[0] > position:
                 return res
             res = x[1]
+        return self.speedLimits[0][1]
 
     #
     # for x in range(len(carList)-1):
@@ -150,11 +152,12 @@ class Road:  # 道路
                         flag = True
                         break
             if not flag:  # 正常0
-                if x.speed < self.speedLimit(x.position) and x.speed < x.MAX_SPEED:
+                if (float(x.speed) < float(self.speedLimit(x.position))) and (float(x.speed) < float(x.MAX_SPEED)):
                     x.speed += x.aacc * SECONDS_PER_CLOCK
-                    if x.speed > self.speedLimit(x.position) or x > x.MAX_SPEED:
+                    if x.speed > self.speedLimit(x.position) or x.speed > x.MAX_SPEED:
                         x = min(self.speedLimit(x.position), x.MAX_SPEED)
         # 计算下一帧的位置
+        res = 0  # 出口等效吨数
         for x in self.carList:
             if x.uuid > 0:  # 过滤障碍
                 x.position += x.speed * SECONDS_PER_CLOCK  # 微元位移，直接用末状态算就完事了
@@ -162,16 +165,20 @@ class Road:  # 道路
                 x.capacity += 1
                 if x.capacity >= JUM_PROCESS_CLOCK:  # 时间到了，事故处理完毕
                     self.carList.remove(x)  # 拿走拿走
+            if x.position > self.length:  # 开完了溜了
+                res += x.capacity
+                self.carList.remove(x)
+        return res
 
-            # if (i.position<=x.position):    #后方车辆和自己，直接过滤
-            # 	continue
-            # elif(i.position>x.saftyFront()): #前方安全距离外车辆，可加速或保持最大速度直行（超车道考虑并道）
-            # 	if (x.lane>0):  #超车道，观测行车道状况
-            # 		for j in self.carList:
-            # 			if j.lane == x.lane - 1:    #快速过滤非目标车道车辆
-            #
-            # 	if(x.speed==x.MAX_SPEED):
-            # 		pass
+        # if (i.position<=x.position):    #后方车辆和自己，直接过滤
+        # 	continue
+        # elif(i.position>x.saftyFront()): #前方安全距离外车辆，可加速或保持最大速度直行（超车道考虑并道）
+        # 	if (x.lane>0):  #超车道，观测行车道状况
+        # 		for j in self.carList:
+        # 			if j.lane == x.lane - 1:    #快速过滤非目标车道车辆
+        #
+        # 	if(x.speed==x.MAX_SPEED):
+        # 		pass
 
 # def crash(self, carList):  # 事故处理
 # 	begin = carList[0]  # 记录最小里程车
@@ -191,9 +198,9 @@ class Road:  # 道路
 # 	pass
 
 
-def newCar(carSize):
+def newCar(carSize, road):
     # 随机挑一个车种
-    seed = random.randint(0, len(carSize))
+    seed = random.randint(0, len(carSize)-1)
     # 设定车型
     if seed == 0:
         size = 0
@@ -201,23 +208,22 @@ def newCar(carSize):
         size = 1
     new = Car()
     new.load(
-        length=carSize[0],
+        length=carSize[seed][0],
         size=size,
-        capacity=carSize[1],
-        MAX_SPEED=carSize[2],
+        capacity=carSize[seed][1],
+        MAX_SPEED=carSize[seed][2],
         aacc=5,
-        dacc=carSize[3],
+        dacc=carSize[seed][3],
         prior=0,
         lane=0
     )
     flag = True
-    for x in Road.carList:
+    for x in road.carList:
         if new.confilct(x):
             flag = False
-            new.__del__()
             break
     if flag:
-        Road.addCar(new)
+        road.addCar(new)
 
 
 if __name__ == '__main__':
@@ -225,6 +231,8 @@ if __name__ == '__main__':
     # 数据载入
     roadlength = open("./config/roadlength.txt")
     exp = Road(int(roadlength.read()))
+    exp.speedLimits.append([0, 100])
+    exp.laneList.append([0, 2])
     print("[roadlength]"+str(exp.length))
     readcar = open("./config/Car.txt")
     carSize = []
@@ -241,5 +249,15 @@ if __name__ == '__main__':
         print(x)
     # 往道路里塞车
     # CLOCK循环
+    clock = 0
+    sum = 0
     while (True):
-        pass
+        iccc = random.randint(0, 10)
+        if iccc == 0:
+            newCar(carSize, exp)
+        sum += exp.update()
+        clock += 1
+        if clock %1000 == 0:
+            print('[clock]' + str(clock))
+            print('[sum]' + str(sum))
+            output = 
