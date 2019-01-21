@@ -1,17 +1,19 @@
 import threading
 import time
 import math
+import re
+import random
 
 SECONDS_PER_CLOCK = 5  # 时钟时间数
 JUM_PROCESS_CLOCK = 1000  # 事故处理时钟数
 
 
-class car:
+class Car:
     uuid = 0
 
     def __init__(self):
-        self.uuid = car.uuid  # 车辆识别码，若识别码为负表示是障碍
-        car.uuid += 1  # 生成新的uuid
+        self.uuid = Car.uuid  # 车辆识别码，若识别码为负表示是障碍
+        Car.uuid += 1  # 生成新的uuid
         self.speed = 0  # m/s
         self.length = 0  # m
         self.size = None  # 车型 [0:桥车 1：大客、货运]（影响限速）
@@ -44,7 +46,7 @@ class car:
         elif self.saftyDistence() < car.position:
             return False  # 无冲突，车辆在前方
 
-    def load(self, length=0, size=None, capacity=0, MAX_ SPEED=0, aacc=0, dacc=0, prior=0, position=0, lane=0,
+    def load(self, length=0, size=None, capacity=0, MAX_SPEED=0, aacc=0, dacc=0, prior=0, position=0, lane=0,
              isCar=True, ):
         self.length = length
         self.size = size
@@ -77,7 +79,7 @@ class car:
 # 		self.next = next    #下一微元链接
 #
 #
-class road:  # 道路
+class Rroad:  # 道路
 
     def __init__(self, length):
         self.length = length
@@ -131,8 +133,7 @@ class road:  # 道路
                     flag = True
                     if self.laneCount(x) > x.lane:  # 未在最高速道上
                         for j in self.carList:
-                            if math.floor(j.lane) == x.lane + 1:
-                                # 已经考虑了变道中的车辆的双占用
+                            if math.floor(j.lane) == x.lane + 1:  # 已经考虑了变道中的车辆的双占用
                                 if x.confilct(j):  # 不允许变道，制动
                                     x.speed -= x.dacc * SECONDS_PER_CLOCK  # 制动
                                     if x.speed < 0:
@@ -178,15 +179,64 @@ class road:  # 道路
 # 	for x in carList:
 # 		length += x.length
 # 		self.carList.remove(x)  # 销毁车辆
-# 	jum = car()
+# 	jum = Car()
 # 	jum.load(length=length, isCar=False)
 # 	self.carList.insert(search(begin), jum)
 
 
-# def search(self, car):  # 为维护顺序表插的一个找下标函数
+# def search(self, Car):  # 为维护顺序表插的一个找下标函数
 # 	for x in self.carList:
 # 		if x.uuid==x[1].uuid:
 # 			return x[0]
 # 	pass
 if __name__ == '__main__':
-    exp = road(10000)
+    print("[Hanyuu debuging]")
+    # 数据载入
+    roadlength = open("./config/roadlength.txt")
+    exp = Rroad(int(roadlength.read()))
+    print("[roadlength]"+str(exp.length))
+    readcar = open("./config/Car.txt")
+    carSize = []
+    temp = []
+    with open("./config/Car.txt") as car:
+        for line in car:
+            # temp.append(float(line.strip('\n')))
+            reres = re.findall('(\d+\.?\d*)', line)
+            s = []
+            for x in reres:
+                s.append(float(x))
+            carSize.append(s)
+    for x in carSize:
+        print(x)
+    # 往道路里塞车
+    # CLOCK循环
+    while (True):
+
+
+def newCar(carSize):
+    # 随机挑一个车种
+    seed = random.randint(0, len(carSize))
+    # 设定车型
+    if seed == 0:
+        size = 0
+    else:
+        size = 1
+    new = Car()
+    new.load(
+        length=carSize[0],
+        size=size,
+        capacity=carSize[1],
+        MAX_SPEED=carSize[2],
+        aacc=5,
+        dacc=carSize[3],
+        prior=0,
+        lane=0
+    )
+    flag = True
+    for x in Rroad.carList:
+        if new.confilct(x):
+            flag = False
+            new.__del__()
+            break
+    if flag:
+        Rroad.addCar(new)
