@@ -79,7 +79,7 @@ class Car:
 # 		self.next = next    #下一微元链接
 #
 #
-class Rroad:  # 道路
+class Road:  # 道路
 
     def __init__(self, length):
         self.length = length
@@ -189,28 +189,6 @@ class Rroad:  # 道路
 # 		if x.uuid==x[1].uuid:
 # 			return x[0]
 # 	pass
-if __name__ == '__main__':
-    print("[Hanyuu debuging]")
-    # 数据载入
-    roadlength = open("./config/roadlength.txt")
-    exp = Rroad(int(roadlength.read()))
-    print("[roadlength]"+str(exp.length))
-    readcar = open("./config/Car.txt")
-    carSize = []
-    temp = []
-    with open("./config/Car.txt") as car:
-        for line in car:
-            # temp.append(float(line.strip('\n')))
-            reres = re.findall('(\d+\.?\d*)', line)
-            s = []
-            for x in reres:
-                s.append(float(x))
-            carSize.append(s)
-    for x in carSize:
-        print(x)
-    # 往道路里塞车
-    # CLOCK循环
-    while (True):
 
 
 def newCar(carSize):
@@ -233,10 +211,35 @@ def newCar(carSize):
         lane=0
     )
     flag = True
-    for x in Rroad.carList:
+    for x in Road.carList:
         if new.confilct(x):
             flag = False
             new.__del__()
             break
     if flag:
-        Rroad.addCar(new)
+        Road.addCar(new)
+
+
+if __name__ == '__main__':
+    print("[Hanyuu debuging]")
+    # 数据载入
+    roadlength = open("./config/roadlength.txt")
+    exp = Road(int(roadlength.read()))
+    print("[roadlength]"+str(exp.length))
+    readcar = open("./config/Car.txt")
+    carSize = []
+    temp = []
+    with open("./config/Car.txt") as car:
+        for line in car:
+            # temp.append(float(line.strip('\n')))
+            reres = re.findall('(\d+\.?\d*)', line)
+            s = []
+            for x in reres:
+                s.append(float(x))
+            carSize.append(s)
+    for x in carSize:
+        print(x)
+    # 往道路里塞车
+    # CLOCK循环
+    while (True):
+        pass
