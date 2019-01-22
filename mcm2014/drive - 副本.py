@@ -288,10 +288,10 @@ def com(test_deepth=TEST_DEEPTH, randv=randV, speed_limits=SPEED_LIMITS, lane_co
 
 
 if __name__ == '__main__':
-    # for sl in range(5):
-    #     com(speed_limits=n2si(sl * 10 + 80)
-     for lc in range(5):
-         com(lane_count=lc + 1)
+    for sl in range(5):
+        com(speed_limits=n2si(sl * 10 + 80)
+    # for lc in range(5):
+    #     com(lane_count=lc + 1)
     # for rv in range(10):
     #     com(randv=rv * 5+5)
     # for rv in range(4):
