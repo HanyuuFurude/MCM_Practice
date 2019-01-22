@@ -220,7 +220,7 @@ def newCar(carSize, road):
         length=carSize[seed][0],
         size=size,
         capacity=carSize[seed][1],
-        MAX_SPEED=n2si(carSize[seed][2]),
+        MAX_SPEED=carSize[seed][2],
         aacc=carSize[seed][4],
         dacc=carSize[seed][3],
         prior=0,
@@ -237,7 +237,7 @@ def newCar(carSize, road):
 
 TEST_DEEPTH = 5e3  # 测试深度
 randV = 0  # 每个时钟生成车辆的概率的倒数
-SPEED_LIMITS = n2si(100)  # 限速
+SPEED_LIMITS = 100  # 限速
 LANE_COUNT = 2  # 车道数
 
 
@@ -289,9 +289,9 @@ def com(test_deepth=TEST_DEEPTH, randv=randV, speed_limits=SPEED_LIMITS, lane_co
 
 if __name__ == '__main__':
     # for sl in range(5):
-    #     com(speed_limits=n2si(sl * 10 + 80)
-     for lc in range(5):
-         com(lane_count=lc + 1)
+    #    com(speed_limits=sl * 10 + 80)
+    for lc in range(5):
+        com(lane_count=lc + 1)
     # for rv in range(10):
     #     com(randv=rv * 5+5)
     # for rv in range(4):
