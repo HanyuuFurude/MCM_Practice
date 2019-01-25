@@ -1,4 +1,5 @@
-vertexs={}
+vertexs = {}
+
 
 class Reader:
 
@@ -35,31 +36,30 @@ class Reader:
         return matrix
 
     def init(self):
-        self.vertexs={}
-        count=0
+        self.vertexs = {}
+        count = 0
         for i in range(self.table.nrows):
-            v1=self.table.row_values(i)[0]
-            v2=self.table.row_values(i)[1]
+            v1 = self.table.row_values(i)[0]
+            v2 = self.table.row_values(i)[1]
             if(v1 not in self.vertexs):
-                self.vertexs[v1]=count
-                count+=1
+                self.vertexs[v1] = count
+                count += 1
             if(v2 not in self.vertexs):
                 self.vertexs[v2] = count
                 count += 1
-        self.n=count
-
+        self.n = count
 
     def getGraph(self):
         self.init()
-        data=self.getMatrix()
+        data = self.getMatrix()
         print(data)
-        dic=self.vertexs
-        graph=[[] for _ in range(self.n)]
+        dic = self.vertexs
+        graph = [[] for _ in range(self.n)]
         for edge in data:
-            ver1=dic[edge[0]]
-            ver2=dic[edge[1]]
-            graph[ver1].append([ver2,edge[2]])
-            graph[ver2].append([ver1,edge[2]])
+            ver1 = dic[edge[0]]
+            ver2 = dic[edge[1]]
+            graph[ver1].append([ver2, edge[2]])
+            graph[ver2].append([ver1, edge[2]])
         return graph
 
 
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     a = reader.getGraph()
     for edges in a:
         print(edges)
-    #print(type(a))
-    #print(a)
+    # print(type(a))
+    # print(a)
     # import numpy as np
     # print(np.shape(a))
