@@ -15,3 +15,8 @@ class disaster:
         self.dCase=type
         self.dPos=local
         self.dTrend=trend
+
+    def trend:
+        reader_MRCD.capacity[self.self.dPos]=0
+
+
