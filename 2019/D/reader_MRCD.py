@@ -1,5 +1,5 @@
 vertexs = {}
-
+import logMe
 
 class Reader:
 
@@ -99,8 +99,12 @@ if __name__ == '__main__':
     # print(reader.n)
     # for edges in graph:
     #     print(edges)
-    # 各点到点到1的最短路径
+
+    # 各点到点到Exit的最短路径
     #print(reader.vertexs['Exit'])
     costs,parents=dij(reader.vertexs['Exit'],graph)
-    print(costs)
+    print(costs)#cost表示各个点到Exit的最短距离
+    # parents表示上一个节点，可根据它输出路径
+    c = logMe.logme()
+    c.log(str(costs))
     print(parents)
