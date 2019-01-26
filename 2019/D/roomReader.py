@@ -1,5 +1,12 @@
 import reader
 
+### 房间
+
+# *   $roomID_i​$:房间唯一标识号
+#
+# *   $roomCapacity_i$:房间的容量(人)（由面积计算）
+# *   $roomFloor_i$:房间所在的楼层数
+
 
 class roomReader:
     def __init__(self, fileName='floor.xlsx'):
