@@ -63,17 +63,44 @@ class Reader:
         # print(data)
         return graph
 
+def dij(start, graph):
+    n=len(graph)
+    # print(n)
+    costs=[99999 for _ in range(n)]
+    costs[start]=0
+    parents=[-1 for _ in range(n)]
+    visited = [False for _ in range(n)]
+    t=[]
+    while len(t)<n:
+        minCost=99999
+        minNode=None
+        for i in range(n):
+            if not visited[i] and costs[i]<minCost:
+                minCost=costs[i]
+                minNode=i
+        t.append(minNode)
+        visited[minNode]=True
+
+        for edge in graph[minNode]:
+            if not visited[edge[0]] and minCost +edge[1]<costs[edge[0]]:
+                costs[edge[0]]=minCost+edge[1]
+                parents[edge[0]]=minNode
+    return costs,parents
+
+
 
 if __name__ == '__main__':
     import os
     print('[path] '+os.path.dirname(os.path.abspath(__file__)))
     reader = Reader()
-    reader.debug()
+    #reader.debug()
     # reader.print()
-    a = reader.getGraph()
-    for edges in a:
-        print(edges)
-    # print(type(a))
-    # print(a)
-    # import numpy as np
-    # print(np.shape(a))
+    graph = reader.getGraph()
+    # print(reader.n)
+    # for edges in graph:
+    #     print(edges)
+    # 各点到点到1的最短路径
+    #print(reader.vertexs['Exit'])
+    costs,parents=dij(reader.vertexs['Exit'],graph)
+    print(costs)
+    print(parents)
