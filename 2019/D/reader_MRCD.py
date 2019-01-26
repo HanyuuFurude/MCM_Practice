@@ -60,6 +60,7 @@ class Reader:
             ver2 = dic[edge[1]]
             graph[ver1].append([ver2, edge[2]])
             graph[ver2].append([ver1, edge[2]])
+        # print(data)
         return graph
 
 
@@ -68,7 +69,7 @@ if __name__ == '__main__':
     print('[path] '+os.path.dirname(os.path.abspath(__file__)))
     reader = Reader()
     reader.debug()
-    reader.print()
+    # reader.print()
     a = reader.getGraph()
     for edges in a:
         print(edges)

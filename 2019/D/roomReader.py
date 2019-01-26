@@ -1,9 +1,8 @@
 import reader
-print(type(type('hanyuu')))
 
 
 class roomReader:
-    def __init__(self, fileName='floor.slxs'):
+    def __init__(self, fileName='floor.xlsx'):
         readIn = reader.Reader(fileName)
         mat = readIn.getMartix()
         self.dic = {}
