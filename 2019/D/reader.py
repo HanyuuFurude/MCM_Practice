@@ -1,7 +1,7 @@
 class Reader:
 
     def __init__(self, fileName, filePath=None):
-        # self.fileName = '''data.xlsx'''
+        # self.fileName = '''floor.xlsx'''
         import os
         self.fileName = fileName
         if filePath == None:
