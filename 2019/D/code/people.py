@@ -38,7 +38,7 @@ class groupList:
                                                 #uuid 房间号 人数
     def load(self, ID):
         sumUp = 0
-        for x in self.newNodeList[ID]:
+        for x in self.nodeList[ID]:
             sumUp += x.gCount
         return sumUp
 

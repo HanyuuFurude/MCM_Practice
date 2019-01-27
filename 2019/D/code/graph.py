@@ -89,7 +89,8 @@ class graph:
                     minNode = i
             t.append(minNode)
             visited[minNode] = True
-
+            if minNode == None:
+                break
             for edge in self.graphNode[minNode]:
                 if self.freeCapacity(self.getPathID(edge, minNode), g) > 0:
                     if not visited[edge] and minCost + self.graphNode[minNode][edge] < costs[edge]:
@@ -246,12 +247,14 @@ if __name__ == '__main__':
                             new = people.group(0, gr.getPathID(
                                 res[0][-2], i.gPosition), min(res[1], i.gCount), res[0][-2])
                             # 占领时间窗
+                            # 挂载
                             g.newNodeList[new.gPosition].append(new)
                             i.gCount -= min(res[1], i.gCount)
                             if i.gCount == 0:
                                 break
                             # 路径迷失
                             elif i.gPosition in res[0] is False:
+                                # 挂载
                                 g.newNodeList[i.gPosition].append(i)
                                 break
                 # 道路
@@ -259,7 +262,10 @@ if __name__ == '__main__':
                     i.gPositionOnRoad += i.gSpeed * Global.SECOND_PER_FRAME
                     if i.gPositionOnRoad > gr.list[i.gPosition][2]:
                         new = people.group(0, i.gPositionOnRoadTo, i.gCount)
+                        # 挂载
                         g.newNodeList[i.gPositionOnRoadTo].append(new)
+                    else:
+                        g.newNodeList[i.gPosition].append(i)
         # 新旧交替
         for x in g.newNodeList:
             g.nodeList[x].clear()
@@ -268,8 +274,10 @@ if __name__ == '__main__':
                 for i in g.newNodeList[x]:
                     sum += i.gCount
                 if sum > 0:
+                    # 挂载
                     g.nodeList[x].append(people.group(0, x, sum))
             else:
                 for i in g.newNodeList[x]:
+                    # 挂载
                     g.nodeList[x].append(i)
             g.newNodeList[x].clear()
