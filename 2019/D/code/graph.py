@@ -63,13 +63,13 @@ class graph:
             if [a, b] == [self.list[x][0], self.list[x][1]] or [a, b] == [self.list[x][1], self.list[x][0]]:
                 return x
         return None
-    def freeCapacity(self, ID=None, g=None):    #查询边的剩余容量
+
+    def freeCapacity(self, ID=None, g=None):  # 查询边的剩余容量
         return self.list[ID][3] - g.load(ID)
 
-
-    def dijkstra(self, ID,g):
+    def dijkstra(self, ID, g):
         if ID == 'Exit':
-            return [['Exit'],float('inf')]
+            return [['Exit'], float('inf')]
         n = len(self.graphNode)
         costs = {}
         parents = {}
@@ -106,7 +106,8 @@ class graph:
             for x in range(len(self.path)):
                 if x == len(self.path)-1:
                     break
-                temp = self.freeCapacity(self.getPathID(self.path[x],self.path[x+1]),g)
+                temp = self.freeCapacity(self.getPathID(
+                    self.path[x], self.path[x+1]), g)
                 if temp < route:
                     route = temp
         else:
@@ -205,53 +206,70 @@ def sumCount(val):
 
 #     pass
 if __name__ == '__main__':
-    #初始化
+    # 初始化
     gr = graph()
     r = roomList()
     g = people.groupList()
-    countLog = logMe.logme('count.log')
-    snapLog = logMe.logme('snap.log')
+    countLog = logMe.logme('HanyuulogCount.log')
+    snapLog = logMe.logme('HanyuulogSnap.log')
+    # 主循环
     while Global.clockCount < 1000:
+        # 时钟计数
         Global.clockCount += 1
+        # 时钟日志
         print(Global.clockCount)
+        # 切片日志
         if Global.clockCount % 3 == 0:
-            countLog.log(Global.clockCount, Global.savedPopulation, Global.score)
+            countLog.log(Global.clockCount,
+                         Global.savedPopulation, Global.score)
             for x in g.nodeList:
                 snapLog.log(x, g.load(x))
             snapLog.log('')
+        # 演算
+        # 遍历所有容器
         for x in g.nodeList:
+            # 遍历该容器下的所有group
             for i in g.nodeList[x]:
-                if i.gPosition[0]!='p':
+                # 楼梯和房间
+                if i.gPosition[0] != 'p':
+                    # 在出口，直接溜
                     if x == 'Exit':
                         sumCount(i.gCount)
                         del i
                         continue
+                    # 向前找路
                     else:
-                        res = gr.dijkstra(x,g)
+                        # 带时间窗的寻路
+                        res = gr.dijkstra(x, g)
+                        # 当前节点分流
                         while i.gCount > 0:
-                            new = people.group(0, res[0][-2], min(res[1], i.gCount),res[0][-2])
+                            new = people.group(0, gr.getPathID(
+                                res[0][-2], i.gPosition), min(res[1], i.gCount), res[0][-2])
+                            # 占领时间窗
                             g.newNodeList[new.gPosition].append(new)
                             i.gCount -= min(res[1], i.gCount)
                             if i.gCount == 0:
                                 break
+                            # 路径迷失
                             elif i.gPosition in res[0] is False:
                                 g.newNodeList[i.gPosition].append(i)
                                 break
+                # 道路
                 else:
                     i.gPositionOnRoad += i.gSpeed * Global.SECOND_PER_FRAME
                     if i.gPositionOnRoad > gr.list[i.gPosition][2]:
                         new = people.group(0, i.gPositionOnRoadTo, i.gCount)
                         g.newNodeList[i.gPositionOnRoadTo].append(new)
+        # 新旧交替
         for x in g.newNodeList:
             g.nodeList[x].clear()
             if x[0] != 'p':
                 sum = 0
                 for i in g.newNodeList[x]:
                     sum += i.gCount
-                if sum >0:
+                if sum > 0:
                     g.nodeList[x].append(people.group(0, x, sum))
             else:
                 for i in g.newNodeList[x]:
                     g.nodeList[x].append(i)
             g.newNodeList[x].clear()
-
