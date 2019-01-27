@@ -7,7 +7,7 @@ class logme:
             sum=''
             for x in txt:
                 sum += str(x) + '\t'
-            l.write(sum)
+            l.write(sum+'\n')
 if __name__ == '__main__':
     a = logme()
     a.log('a',1,3)

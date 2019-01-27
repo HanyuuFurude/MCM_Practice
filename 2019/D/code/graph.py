@@ -32,10 +32,10 @@ class graph:
             self.graphNode[fs(x[1])][fs(x[2])] = x[3]
             self.graphNode[fs(x[2])][fs(x[1])] = x[3]
 
-    def print(self):
-        for x in self.list:
-            print('[edge]:', x, '[node]', self.list[x][0],
-                  self.list[x][1], '[length]', self.list[x][2], '[capacity]', self.list[x][3], '\t[load]', self.pathList[x])
+    # def print(self):
+    #     for x in self.list:
+    #         print('[edge]:', x, '[node]', self.list[x][0],
+    #               self.list[x][1], '[length]', self.list[x][2], '[capacity]', self.list[x][3], '\t[load]', self.pathList[x])
 
     # def query(self, ID):
     #     return self.pathList[ID]
@@ -216,8 +216,9 @@ if __name__ == '__main__':
         print(Global.clockCount)
         if Global.clockCount % 3 == 0:
             countLog.log(Global.clockCount, Global.savedPopulation, Global.score)
-            for x in g.newNodeList:
-                snapLog.log(x,g.load(x))
+            for x in g.nodeList:
+                snapLog.log(x, g.load(x))
+            snapLog.log('')
         for x in g.nodeList:
             for i in g.nodeList[x]:
                 if i.gPosition[0]!='p':
