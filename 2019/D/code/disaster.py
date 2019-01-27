@@ -10,9 +10,4 @@ class disaster:
         self.case = case
         self.position = local
         self.trend = None
-
-    def flow(self): #险情流动
-        if self.case == 1:  #蔓延型
-            pass
-        elif self.case == 0:  #转移型
-            pass
+        self.list = []
