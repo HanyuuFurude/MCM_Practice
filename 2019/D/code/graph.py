@@ -111,8 +111,6 @@ class graph:
                     self.path[x], self.path[x+1]), g)
                 if temp < route:
                     route = temp
-        else:
-            route = 0
         # return costs, parents, self.path
         return [self.path, route]
 
@@ -244,8 +242,13 @@ if __name__ == '__main__':
                         res = gr.dijkstra(x, g)
                         # 当前节点分流
                         while i.gCount > 0:
-                            new = people.group(0, gr.getPathID(
-                                res[0][-2], i.gPosition), min(res[1], i.gCount), res[0][-2])
+                            if len(res[0])>1:
+                                new = people.group(0, gr.getPathID(res[0][-2], i.gPosition), min(res[1], i.gCount), res[0][-2])
+                            else:
+                                if gr.getPathID(res[0][-1], i.gPosition) ==None:
+                                    break
+                                new = people.group(0, gr.getPathID(res[0][-1], i.gPosition), min(res[1], i.gCount), res[0][-1])
+
                             # 占领时间窗
                             # 挂载
                             g.newNodeList[new.gPosition].append(new)
