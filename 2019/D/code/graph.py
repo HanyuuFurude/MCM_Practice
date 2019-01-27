@@ -22,9 +22,11 @@ class graph:
 
         for x in self.matrix:
             self.list[fs(x[0])] = [fs(x[1]), fs(x[2]), x[3], x[4]]
+             #第一条边 第二条边 长度 容量
             self.pathList[fs(x[0])] = 0  # 初始化路表
             self.graphNode[fs(x[1])][fs(x[2])] = x[3]
             self.graphNode[fs(x[2])][fs(x[1])] = x[3]
+
     def print(self):
         for x in self.list:
             print('[edge]:', x, '[node]', self.list[x][0],
@@ -32,18 +34,59 @@ class graph:
 
     def query(self, ID):
         return self.pathList[ID]
+
     def queryFree(self, ID):
-        return self.list[ID][3]
-    def queryLength(self,ID):
+        return self.list[ID][3]-self.pathList[ID]
+
+    def queryLength(self, ID):
         return self.list[ID][2]
 
     def setter(self, ID, val):
         self.pathList[ID] = val
-    def getGraph(self):
-       return self.list
-    def dijkstra(self, ID):
-        pass
 
+    def getGraph(self):
+        return self.list
+
+    def avilable(self, a, b):
+        for x in self.list:
+            if [a, b] == [x[0], x[1]] or [a, b] == [x[1], x[0]]:
+                return self.queryFree(x)
+            else:
+                return None
+
+
+    def dijkstra(self, ID):
+        n = len(self.graphNode)
+        costs = {}
+        parents = {}
+        visited = {}
+        for x in self.graphNode:
+            costs[x] = float('inf')
+            parents[x] = -1
+            visited[x] = False
+        costs[ID] = 0
+        t = []
+        while len(t) < n:
+            minCost = float('inf')
+            minNode = None
+            for i in self.graphNode:
+                if not visited[i] and costs[i] < minCost:
+                    minCost = costs[i]
+                    minNode = i
+            t.append(minNode)
+            visited[minNode] = True
+
+            for edge in self.graphNode[minNode]:
+                if self.avilable(edge,minNode):
+                    if not visited[edge] and minCost + self.graphNode[minNode][edge] < costs[edge]:
+                        costs[edge] = minCost + self.graphNode[minNode][edge]
+                        parents[edge] = minNode
+        self.path = ['Exit']
+        node = parents['Exit']
+        while node != -1:
+            self.path.append(node)
+            node = parents[node]
+        return costs, parents, self.path
 
 
 class roomList:
@@ -74,17 +117,10 @@ class roomList:
             print('[room]', self.roomList[x], '[capacity]',
                   self.capacityList[x], '\t[load]', self.loadList[x])
 
-
-
-
 if __name__ == "__main__":
     a = graph()
     a.load()
+
+    a.setter('p000',50)
+    print(a.queryFree('p000'))
     a.print()
-    b = roomList()
-    b.load()
-    b.print()
-    print(b.queryFree('173'))
-    print(b.queryFloor('173'))
-    b.setter('173', 40)
-    print(b.queryFree('173'))
