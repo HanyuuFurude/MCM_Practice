@@ -7,9 +7,12 @@
 
 class disaster:
     def __init__(self, case, local, trend):
-        self.dCase = case
-        self.dPos = local
-        self.dTrend = trend
+        self.case = case
+        self.position = local
+        self.trend = None
 
-    def trend(self):
-        pass
+    def flow(self): #险情流动
+        if self.case == 1:  #蔓延型
+            pass
+        elif self.case == 0:  #转移型
+            pass
