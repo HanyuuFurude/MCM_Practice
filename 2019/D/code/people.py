@@ -12,7 +12,7 @@ from fs import fs
 class group:
     def __init__(self, uuid, position, count, port=None, por=0):
         self.gid = uuid
-        self.gSpeed = 0.6
+        self.gSpeed = 1.6
         self.gPosition = position
         self.gPositionOnRoad = por  # 若在路径上，记录当前行进距离
         self.gPositionOnRoadTo = port  # 若在路径上，记录目标容器
@@ -34,7 +34,7 @@ class groupList:
                 self.newNodeList[fs(x[i])] = []
         self.matrix = Reader('floor.xlsx').getMartix()[0]
         for x in self.matrix:
-            self.nodeList[fs(x[1])].append(group(0, fs(x[1]), int(x[3])))
+            self.nodeList[fs(x[1])].append(group(0, fs(x[1]), int(x[3]))
                                                 #uuid 房间号 人数
     def load(self, ID):
         sumUp = 0
